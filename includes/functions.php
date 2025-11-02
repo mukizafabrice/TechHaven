@@ -45,48 +45,7 @@ function getCategoryById($pdo, $category_id)
 /**
  * Get products with optional filters
  */
-function getProducts($pdo, $category_id = null, $search = null, $limit = null, $featured = false)
-{
-    $sql = "SELECT p.*, c.name as category_name, c.slug as category_slug 
-            FROM products p 
-            LEFT JOIN categories c ON p.category_id = c.id 
-            WHERE p.is_active = TRUE";
 
-    $params = [];
-
-    if ($category_id) {
-        $sql .= " AND p.category_id = ?";
-        $params[] = $category_id;
-    }
-
-    if ($search) {
-        $sql .= " AND (p.name LIKE ? OR p.description LIKE ? OR p.short_description LIKE ?)";
-        $searchTerm = "%$search%";
-        $params[] = $searchTerm;
-        $params[] = $searchTerm;
-        $params[] = $searchTerm;
-    }
-
-    if ($featured) {
-        $sql .= " AND p.is_featured = TRUE";
-    }
-
-    $sql .= " ORDER BY p.created_at DESC";
-
-    if ($limit) {
-        $sql .= " LIMIT ?";
-        $params[] = (int)$limit;
-    }
-
-    try {
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute($params);
-        return $stmt->fetchAll();
-    } catch (PDOException $e) {
-        error_log("Error fetching products: " . $e->getMessage());
-        return [];
-    }
-}
 
 /**
  * Get single product by slug
@@ -142,21 +101,18 @@ function trackProductView($pdo, $product_id)
 /**
  * Format price with currency symbol
  */
-function formatPrice($price)
-{
-    return '$' . number_format($price, 2);
-}
+
 
 /**
  * Calculate discount percentage
  */
-function calculateDiscountPercentage($original_price, $discount_price)
-{
-    if ($discount_price && $original_price > 0) {
-        return round((($original_price - $discount_price) / $original_price) * 100);
-    }
-    return 0;
-}
+// function calculateDiscountPercentage($original_price, $discount_price)
+// {
+//     if ($discount_price && $original_price > 0) {
+//         return round((($original_price - $discount_price) / $original_price) * 100);
+//     }
+//     return 0;
+// }
 
 /**
  * Generate WhatsApp share link
@@ -279,4 +235,94 @@ function redirect($url)
 {
     header("Location: $url");
     exit;
+}
+/**
+ * Get products with optional filters - DEBUG VERSION
+ */
+/**
+ * Get products with optional filters - DEBUG VERSION
+ */
+function getProducts($pdo, $category_id = null, $search = null, $limit = null, $featured = false)
+{
+    // Build the base query
+    $sql = "SELECT p.*, c.name as category_name, c.slug as category_slug 
+            FROM products p 
+            LEFT JOIN categories c ON p.category_id = c.id 
+            WHERE p.is_active = TRUE";
+
+    $params = [];
+
+    if ($category_id) {
+        $sql .= " AND p.category_id = ?";
+        $params[] = $category_id;
+    }
+
+    if ($search) {
+        $sql .= " AND (p.name LIKE ? OR p.description LIKE ? OR p.short_description LIKE ?)";
+        $searchTerm = "%$search%";
+        $params[] = $searchTerm;
+        $params[] = $searchTerm;
+        $params[] = $searchTerm;
+    }
+
+    // FIX: Make sure featured filter works correctly
+    if ($featured === true) {
+        $sql .= " AND p.is_featured = TRUE";
+        error_log("FEATURED FILTER APPLIED: Looking for featured products");
+    }
+
+    $sql .= " ORDER BY p.created_at DESC";
+
+    if ($limit) {
+        $sql .= " LIMIT ?";
+        $params[] = (int)$limit;
+    }
+
+    // DEBUG: Log the query and parameters
+    error_log("Products Query: " . $sql);
+    error_log("Query Params: " . implode(', ', $params));
+    error_log("Featured parameter: " . ($featured ? 'TRUE' : 'FALSE'));
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        $results = $stmt->fetchAll();
+
+        error_log("Found " . count($results) . " products");
+        if (count($results) > 0) {
+            error_log("First product: " . $results[0]['name'] .
+                " (Featured: " . $results[0]['is_featured'] .
+                ", Active: " . $results[0]['is_active'] . ")");
+        } else {
+            error_log("No products found with current filters");
+        }
+
+        return $results;
+    } catch (PDOException $e) {
+        error_log("Error fetching products: " . $e->getMessage());
+        error_log("SQL Error: " . $e->getMessage());
+        return [];
+    }
+}
+/**
+ * Format price with currency symbol
+ */
+function formatPrice($price)
+{
+    // Ensure price is a valid number
+    $price = floatval($price);
+    if ($price <= 0) {
+        return '$0.00';
+    }
+    return '$' . number_format($price, 2);
+}
+function calculateDiscountPercentage($original_price, $discount_price)
+{
+    $original_price = floatval($original_price);
+    $discount_price = floatval($discount_price);
+
+    if ($discount_price > 0 && $original_price > 0 && $discount_price < $original_price) {
+        return round((($original_price - $discount_price) / $original_price) * 100);
+    }
+    return 0;
 }

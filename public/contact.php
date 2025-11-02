@@ -78,9 +78,9 @@ if ($_POST) {
                             <div>
                                 <h3 class="text-lg font-semibold text-gray-900">Our Office</h3>
                                 <p class="mt-1 text-gray-600">
-                                    123 Tech Street<br>
-                                    Digital City, DC 12345<br>
-                                    United States
+                                    Makuza Peace Plaza<br>
+                                    KN 48 St<br>
+                                    Kigali, Rwanda
                                 </p>
                             </div>
                         </div>
@@ -93,7 +93,7 @@ if ($_POST) {
                             <div>
                                 <h3 class="text-lg font-semibold text-gray-900">Phone Number</h3>
                                 <p class="mt-1 text-gray-600">
-                                    +1 (555) 123-4567<br>
+                                    +250 (783) 818-521<br>
                                     <span class="text-sm text-gray-500">Mon-Fri from 9am to 6pm</span>
                                 </p>
                             </div>
@@ -279,37 +279,33 @@ if ($_POST) {
     <div class="container px-4 mx-auto">
         <h2 class="mb-8 text-2xl font-bold text-center text-gray-900">Find Our Store</h2>
         <div class="p-8 bg-white border border-gray-200 rounded-2xl">
-            <!-- Google Maps Embed -->
-            <div class="flex items-center justify-center bg-gray-200 rounded-xl h-96">
-                <div class="text-center text-gray-600">
-                    <i class="mb-4 text-4xl text-blue-600 fas fa-map-marked-alt"></i>
-                    <h3 class="mb-2 text-xl font-semibold">Interactive Map</h3>
-                    <p class="max-w-md mx-auto">Map integration would show our location here. For demo purposes, this is a placeholder.</p>
-                    <div class="max-w-sm p-4 mx-auto mt-4 rounded-lg bg-blue-50">
-                        <p class="text-sm text-blue-700">
-                            <strong>Our Location:</strong><br>
-                            123 Tech Street, Digital City, DC 12345
-                        </p>
-                    </div>
-                </div>
+            <!-- Google Maps Embed for Makuza Peace Plaza -->
+            <div class="overflow-hidden rounded-xl">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.738348996089!2d30.0569905!3d-1.9465656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dca4240db7b3f5%3A0x5256fd511623ef15!2sMakuza%20Peace%20Plaza!5e0!3m2!1sen!2srw!4v1730549659051!5m2!1sen!2srw"
+                    width="100%"
+                    height="450"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    class="shadow-md rounded-xl">
+                </iframe>
             </div>
 
-            <!-- Alternative: Static Map Image or Google Maps Embed -->
-            <!--
-            <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.177631294789!2d-74.00594908459418!3d40.71278367933185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a47df06b185%3A0xc88f44e2d4d7c6b!2s123%20Tech%20St%2C%20Digital%20City%2C%20DC%2012345!5e0!3m2!1sen!2sus!4v1234567890"
-                width="100%" 
-                height="400" 
-                style="border:0;" 
-                allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade"
-                class="rounded-xl">
-            </iframe>
-            -->
+            <!-- Location Info -->
+            <div class="max-w-md p-6 mx-auto mt-8 text-center rounded-lg bg-blue-50">
+                <i class="mb-4 text-4xl text-blue-600 fas fa-map-marker-alt"></i>
+                <h3 class="mb-2 text-xl font-semibold text-gray-900">Our Location</h3>
+                <p class="text-gray-700">
+                    Makuza Peace Plaza,<br>
+                    KN 4 Ave, Kigali, Rwanda
+                </p>
+            </div>
         </div>
     </div>
 </section>
+
 
 <!-- Quick Contact Banner -->
 <section class="py-12 text-white bg-blue-600">

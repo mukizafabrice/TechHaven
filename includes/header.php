@@ -36,8 +36,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
 <body class="bg-gray-50">
     <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto px-4">
+    <header class="sticky top-0 z-50 bg-white shadow-sm">
+        <div class="container px-4 mx-auto">
             <div class="flex items-center justify-between py-4">
                 <!-- Logo -->
                 <div class="flex items-center space-x-2">
@@ -49,7 +49,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <form action="search.php" method="GET" class="flex">
                         <input type="text" name="q" placeholder="Search products..."
                             class="flex-1 px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-r-lg hover:bg-blue-700 transition duration-300">
+                        <button type="submit" class="px-6 py-2 text-white transition duration-300 bg-blue-600 rounded-r-lg hover:bg-blue-700">
                             <i class="fas fa-search"></i>
                         </button>
                     </form>
@@ -60,14 +60,14 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <a href="index.php" class="text-gray-700 hover:text-blue-600 transition duration-300 <?php echo $current_page == 'index.php' ? 'text-blue-600 font-semibold' : ''; ?>">
                         Home
                     </a>
-                    <div class="dropdown relative">
+                    <div class="relative dropdown">
                         <a href="products.php" class="text-gray-700 hover:text-blue-600 transition duration-300 <?php echo $current_page == 'products.php' ? 'text-blue-600 font-semibold' : ''; ?>">
-                            Products <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            Products <i class="ml-1 text-xs fas fa-chevron-down"></i>
                         </a>
-                        <div class="dropdown-menu absolute hidden bg-white shadow-lg rounded-lg mt-2 py-2 w-48 z-50">
+                        <div class="absolute z-50 hidden w-48 py-2 mt-2 bg-white rounded-lg shadow-lg dropdown-menu">
                             <?php foreach ($categories as $category): ?>
                                 <a href="products.php?category=<?= $category['slug'] ?>"
-                                    class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition duration-300">
+                                    class="block px-4 py-2 text-gray-700 transition duration-300 hover:bg-blue-50 hover:text-blue-600">
                                     <?= htmlspecialchars($category['name']) ?>
                                 </a>
                             <?php endforeach; ?>
@@ -78,7 +78,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     </a>
 
                     <!-- Admin Login Link (visible to all) -->
-                    <a href="../admin/login.php" class="text-gray-700 hover:text-blue-600 transition duration-300">
+                    <a href="../admin/login.php" class="text-gray-700 transition duration-300 hover:text-blue-600">
                         <i class="fas fa-user-cog"></i> Admin
                     </a>
                 </nav>

@@ -1,4 +1,6 @@
 <?php
+require_once '../includes/config.php';
+require_once '../includes/functions.php';
 if (!isset($_GET['slug'])) {
     header('Location: products.php');
     exit;
@@ -25,45 +27,45 @@ include '../includes/header.php';
 $discount_percentage = calculateDiscountPercentage($product['price'], $product['discount_price']);
 ?>
 
-<div class="container mx-auto px-4 py-8">
+<div class="container px-4 py-8 mx-auto">
     <!-- Breadcrumb -->
     <nav class="flex mb-8" aria-label="Breadcrumb">
         <ol class="flex items-center space-x-2 text-sm text-gray-600">
-            <li><a href="index.php" class="hover:text-blue-600 transition duration-300">Home</a></li>
-            <li><i class="fas fa-chevron-right text-xs"></i></li>
-            <li><a href="products.php" class="hover:text-blue-600 transition duration-300">Products</a></li>
-            <li><i class="fas fa-chevron-right text-xs"></i></li>
-            <li><a href="products.php?category=<?= $product['category_slug'] ?>" class="hover:text-blue-600 transition duration-300"><?= htmlspecialchars($product['category_name']) ?></a></li>
-            <li><i class="fas fa-chevron-right text-xs"></i></li>
+            <li><a href="index.php" class="transition duration-300 hover:text-blue-600">Home</a></li>
+            <li><i class="text-xs fas fa-chevron-right"></i></li>
+            <li><a href="products.php" class="transition duration-300 hover:text-blue-600">Products</a></li>
+            <li><i class="text-xs fas fa-chevron-right"></i></li>
+            <li><a href="products.php?category=<?= $product['category_slug'] ?>" class="transition duration-300 hover:text-blue-600"><?= htmlspecialchars($product['category_name']) ?></a></li>
+            <li><i class="text-xs fas fa-chevron-right"></i></li>
             <li class="text-gray-400"><?= htmlspecialchars($product['name']) ?></li>
         </ol>
     </nav>
 
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
+    <div class="overflow-hidden bg-white rounded-lg shadow-lg">
+        <div class="grid grid-cols-1 gap-8 p-8 lg:grid-cols-2">
             <!-- Product Images -->
             <div>
                 <!-- Main Image -->
                 <div class="mb-4">
                     <img id="mainImage" src="../assets/uploads/products/<?= $product['featured_image'] ?>"
                         alt="<?= htmlspecialchars($product['name']) ?>"
-                        class="w-full h-96 object-cover rounded-lg">
+                        class="object-cover w-full rounded-lg h-96">
                 </div>
 
                 <!-- Thumbnail Gallery -->
                 <?php if (!empty($product_images)): ?>
                     <div class="grid grid-cols-4 gap-2">
-                        <div class="cursor-pointer border-2 border-blue-500 rounded">
+                        <div class="border-2 border-blue-500 rounded cursor-pointer">
                             <img src="../assets/uploads/products/<?= $product['featured_image'] ?>"
                                 alt="<?= htmlspecialchars($product['name']) ?>"
-                                class="w-full h-20 object-cover rounded"
+                                class="object-cover w-full h-20 rounded"
                                 onclick="changeMainImage(this.src)">
                         </div>
                         <?php foreach ($product_images as $image): ?>
-                            <div class="cursor-pointer border border-gray-200 rounded hover:border-blue-300 transition duration-300">
+                            <div class="transition duration-300 border border-gray-200 rounded cursor-pointer hover:border-blue-300">
                                 <img src="../assets/uploads/products/<?= $image['image_url'] ?>"
                                     alt="<?= htmlspecialchars($image['alt_text'] ?? $product['name']) ?>"
-                                    class="w-full h-20 object-cover rounded"
+                                    class="object-cover w-full h-20 rounded"
                                     onclick="changeMainImage(this.src)">
                             </div>
                         <?php endforeach; ?>
@@ -73,15 +75,15 @@ $discount_percentage = calculateDiscountPercentage($product['price'], $product['
 
             <!-- Product Info -->
             <div>
-                <span class="text-sm text-gray-500 uppercase tracking-wide"><?= htmlspecialchars($product['category_name']) ?></span>
-                <h1 class="text-3xl font-bold text-gray-800 mb-4"><?= htmlspecialchars($product['name']) ?></h1>
+                <span class="text-sm tracking-wide text-gray-500 uppercase"><?= htmlspecialchars($product['category_name']) ?></span>
+                <h1 class="mb-4 text-3xl font-bold text-gray-800"><?= htmlspecialchars($product['name']) ?></h1>
 
                 <!-- Price -->
-                <div class="flex items-center space-x-4 mb-6">
+                <div class="flex items-center mb-6 space-x-4">
                     <?php if ($product['discount_price']): ?>
                         <span class="text-3xl font-bold text-blue-600"><?= formatPrice($product['discount_price']) ?></span>
                         <span class="text-xl text-gray-500 line-through"><?= formatPrice($product['price']) ?></span>
-                        <span class="bg-red-500 text-white px-2 py-1 rounded text-sm font-semibold">
+                        <span class="px-2 py-1 text-sm font-semibold text-white bg-red-500 rounded">
                             Save <?= formatPrice($product['price'] - $product['discount_price']) ?>
                         </span>
                     <?php else: ?>
@@ -92,46 +94,46 @@ $discount_percentage = calculateDiscountPercentage($product['price'], $product['
                 <!-- Stock Status -->
                 <div class="mb-6">
                     <?php if ($product['stock_quantity'] > 0): ?>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                            <i class="fas fa-check-circle mr-2"></i>
+                        <span class="inline-flex items-center px-3 py-1 text-sm font-medium text-green-800 bg-green-100 rounded-full">
+                            <i class="mr-2 fas fa-check-circle"></i>
                             In Stock (<?= $product['stock_quantity'] ?> available)
                         </span>
                     <?php else: ?>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
-                            <i class="fas fa-times-circle mr-2"></i>
+                        <span class="inline-flex items-center px-3 py-1 text-sm font-medium text-red-800 bg-red-100 rounded-full">
+                            <i class="mr-2 fas fa-times-circle"></i>
                             Out of Stock
                         </span>
                     <?php endif; ?>
                 </div>
 
                 <!-- Short Description -->
-                <p class="text-gray-600 mb-6 text-lg"><?= htmlspecialchars($product['short_description']) ?></p>
+                <p class="mb-6 text-lg text-gray-600"><?= htmlspecialchars($product['short_description']) ?></p>
 
                 <!-- Actions -->
-                <div class="space-y-4 mb-8">
+                <div class="mb-8 space-y-4">
                     <?php if ($product['stock_quantity'] > 0): ?>
                         <button onclick="shareOnWhatsApp('<?= $product['slug'] ?>', '<?= addslashes($product['name']) ?>')"
-                            class="w-full bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition duration-300 font-semibold">
-                            <i class="fab fa-whatsapp mr-2"></i> Contact via WhatsApp
+                            class="w-full px-6 py-3 font-semibold text-white transition duration-300 bg-green-600 rounded-lg hover:bg-green-700">
+                            <i class="mr-2 fab fa-whatsapp"></i> Contact via WhatsApp
                         </button>
                     <?php else: ?>
-                        <button disabled class="w-full bg-gray-400 text-white py-3 px-6 rounded-lg font-semibold cursor-not-allowed">
-                            <i class="fas fa-ban mr-2"></i> Currently Unavailable
+                        <button disabled class="w-full px-6 py-3 font-semibold text-white bg-gray-400 rounded-lg cursor-not-allowed">
+                            <i class="mr-2 fas fa-ban"></i> Currently Unavailable
                         </button>
                     <?php endif; ?>
 
                     <div class="flex space-x-4">
-                        <button onclick="window.print()" class="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded hover:bg-gray-300 transition duration-300">
-                            <i class="fas fa-print mr-2"></i> Print Details
+                        <button onclick="window.print()" class="flex-1 px-4 py-2 text-gray-700 transition duration-300 bg-gray-200 rounded hover:bg-gray-300">
+                            <i class="mr-2 fas fa-print"></i> Print Details
                         </button>
-                        <button onclick="shareProduct()" class="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded hover:bg-gray-300 transition duration-300">
-                            <i class="fas fa-share-alt mr-2"></i> Share
+                        <button onclick="shareProduct()" class="flex-1 px-4 py-2 text-gray-700 transition duration-300 bg-gray-200 rounded hover:bg-gray-300">
+                            <i class="mr-2 fas fa-share-alt"></i> Share
                         </button>
                     </div>
                 </div>
 
                 <!-- Additional Info -->
-                <div class="border-t border-gray-200 pt-6">
+                <div class="pt-6 border-t border-gray-200">
                     <div class="space-y-2 text-sm">
                         <div class="flex justify-between">
                             <span class="text-gray-600">SKU:</span>
@@ -154,10 +156,10 @@ $discount_percentage = calculateDiscountPercentage($product['price'], $product['
         <div class="border-t border-gray-200">
             <div class="px-8">
                 <nav class="flex space-x-8" aria-label="Tabs">
-                    <button id="description-tab" class="tab-button border-b-2 border-blue-500 py-4 px-1 text-sm font-medium text-blue-600">
+                    <button id="description-tab" class="px-1 py-4 text-sm font-medium text-blue-600 border-b-2 border-blue-500 tab-button">
                         Description
                     </button>
-                    <button id="specs-tab" class="tab-button border-b-2 border-transparent py-4 px-1 text-sm font-medium text-gray-500 hover:text-gray-700">
+                    <button id="specs-tab" class="px-1 py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent tab-button hover:text-gray-700">
                         Specifications
                     </button>
                 </nav>
@@ -170,14 +172,14 @@ $discount_percentage = calculateDiscountPercentage($product['price'], $product['
                     </div>
                 </div>
 
-                <div id="specs-content" class="tab-content hidden">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div id="specs-content" class="hidden tab-content">
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <!-- Add specifications here if available in database -->
-                        <div class="flex justify-between border-b border-gray-200 py-2">
+                        <div class="flex justify-between py-2 border-b border-gray-200">
                             <span class="text-gray-600">Brand</span>
                             <span class="font-medium">TechHaven</span>
                         </div>
-                        <div class="flex justify-between border-b border-gray-200 py-2">
+                        <div class="flex justify-between py-2 border-b border-gray-200">
                             <span class="text-gray-600">Warranty</span>
                             <span class="font-medium">1 Year</span>
                         </div>
@@ -191,25 +193,25 @@ $discount_percentage = calculateDiscountPercentage($product['price'], $product['
     <!-- Related Products -->
     <?php if (!empty($related_products)): ?>
         <section class="mt-16">
-            <h2 class="text-2xl font-bold mb-8">Related Products</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <h2 class="mb-8 text-2xl font-bold">Related Products</h2>
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
                 <?php foreach ($related_products as $related_product):
                     if ($related_product['id'] == $product['id']) continue;
                     $related_discount = calculateDiscountPercentage($related_product['price'], $related_product['discount_price']);
                 ?>
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 product-card">
+                    <div class="overflow-hidden transition duration-300 bg-white rounded-lg shadow-md hover:shadow-xl product-card">
                         <div class="relative">
                             <img src="../assets/uploads/products/<?= $related_product['featured_image'] ?>"
                                 alt="<?= htmlspecialchars($related_product['name']) ?>"
-                                class="w-full h-48 object-cover">
+                                class="object-cover w-full h-48">
                             <?php if ($related_discount > 0): ?>
-                                <span class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-semibold">
+                                <span class="absolute px-2 py-1 text-xs font-semibold text-white bg-red-500 rounded top-2 left-2">
                                     -<?= $related_discount ?>%
                                 </span>
                             <?php endif; ?>
                         </div>
                         <div class="p-4">
-                            <h3 class="font-semibold text-lg mb-2 line-clamp-2"><?= htmlspecialchars($related_product['name']) ?></h3>
+                            <h3 class="mb-2 text-lg font-semibold line-clamp-2"><?= htmlspecialchars($related_product['name']) ?></h3>
 
                             <div class="flex items-center justify-between mb-3">
                                 <div class="flex items-center space-x-2">
@@ -223,7 +225,7 @@ $discount_percentage = calculateDiscountPercentage($product['price'], $product['
                             </div>
 
                             <a href="product-detail.php?slug=<?= $related_product['slug'] ?>"
-                                class="block w-full bg-blue-600 text-white text-center py-2 rounded text-sm hover:bg-blue-700 transition duration-300">
+                                class="block w-full py-2 text-sm text-center text-white transition duration-300 bg-blue-600 rounded hover:bg-blue-700">
                                 View Details
                             </a>
                         </div>
