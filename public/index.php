@@ -2,6 +2,22 @@
 $page_title = "Home - Discover Latest Electronics";
 include '../includes/header.php';
 
+// Add missing helper functions if they don't exist
+if (!function_exists('calculateDiscountPercentage')) {
+    function calculateDiscountPercentage($originalPrice, $discountPrice)
+    {
+        if (!$discountPrice || $discountPrice >= $originalPrice) return 0;
+        return round((($originalPrice - $discountPrice) / $originalPrice) * 100);
+    }
+}
+
+if (!function_exists('formatPrice')) {
+    function formatPrice($price)
+    {
+        return '$' . number_format($price, 2);
+    }
+}
+
 // DEBUG: Let's check the database connection first
 echo "<!-- DEBUG: Database connection check -->";
 try {
@@ -11,20 +27,23 @@ try {
     echo "<!-- DEBUG: Database connection FAILED: " . $e->getMessage() . " -->";
 }
 
-// DEBUG: Manual check for featured products
+// DEBUG: Manual check for featured products with proper joins
 echo "<!-- DEBUG: Manual featured products check -->";
 try {
-    $manual_check = $pdo->query("SELECT id, name, is_featured, is_active FROM products WHERE is_featured = 1 AND is_active = 1");
+    $manual_check = $pdo->query("
+        SELECT p.id, p.name, p.slug, p.price, p.discount_price, p.stock_quantity, 
+               p.featured_image, p.is_featured, p.is_active, p.short_description,
+               c.name as category_name 
+        FROM products p 
+        LEFT JOIN categories c ON p.category_id = c.id 
+        WHERE p.is_featured = 1 AND p.is_active = 1 
+        LIMIT 8
+    ");
     $manual_results = $manual_check->fetchAll(PDO::FETCH_ASSOC);
     echo "<!-- DEBUG: Manual SQL found " . count($manual_results) . " featured products -->";
 
     foreach ($manual_results as $product) {
-        echo "<!-- DEBUG: Featured Product - ID: " . $product['id'] . ", Name: " . $product['name'] . ", Featured: " . $product['is_featured'] . ", Active: " . $product['is_active'] . " -->";
-    }
-
-    // If manual check finds products but getProducts doesn't, there's a function issue
-    if (count($manual_results) > 0) {
-        echo "<!-- DEBUG: Products exist in DB but getProducts() may not be returning them -->";
+        echo "<!-- DEBUG: Featured Product - ID: " . $product['id'] . ", Name: " . $product['name'] . " -->";
     }
 } catch (Exception $e) {
     echo "<!-- DEBUG: Manual check error: " . $e->getMessage() . " -->";
@@ -62,6 +81,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Consolidated Animation Definitions */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -108,6 +128,25 @@ elseif (empty($featured_products) && !empty($all_products)) {
             }
         }
 
+        @keyframes backgroundCycle {
+            0% {
+                background-image: url('https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            }
+
+            33% {
+                background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80');
+            }
+
+            66% {
+                background-image: url('https://images.unsplash.com/photo-1468436139062-f60a71c5c892?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            }
+
+            100% {
+                background-image: url('https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            }
+        }
+
+        /* Animation Classes */
         .animate-fade-in-up {
             animation: fadeInUp 1s ease-out;
         }
@@ -124,6 +163,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
             animation: float 3s ease-in-out infinite;
         }
 
+        /* Component Styles */
         .btn-primary {
             background-color: #7B2FCE;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -169,66 +209,6 @@ elseif (empty($featured_products) && !empty($all_products)) {
             overflow: hidden;
         }
 
-        .product-card {
-            transition: all 0.3s ease;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes backgroundCycle {
-            0% {
-                background-image: url('https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
-            }
-
-            33% {
-                background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80');
-            }
-
-            66% {
-                background-image: url('https://images.unsplash.com/photo-1468436139062-f60a71c5c892?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
-            }
-
-            100% {
-                background-image: url('https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
-            }
-        }
-
         .hero-bg {
             animation: backgroundCycle 18s ease-in-out infinite;
             background-size: cover;
@@ -236,16 +216,25 @@ elseif (empty($featured_products) && !empty($all_products)) {
             background-repeat: no-repeat;
         }
 
-        .animate-fade-in-up {
-            animation: fadeInUp 1s ease-out;
+        /* Ensure animations work with Intersection Observer */
+        .animate-on-scroll {
+            opacity: 0;
+            animation-fill-mode: both;
         }
 
-        .animate-fade-in {
-            animation: fadeIn 1.5s ease-out;
+        .animate-fade-in-up.animate-on-scroll {
+            animation: fadeInUp 1s ease-out forwards;
+            animation-play-state: paused;
         }
 
-        .animate-slide-in-left {
-            animation: slideInLeft 1s ease-out;
+        .animate-fade-in.animate-on-scroll {
+            animation: fadeIn 1.5s ease-out forwards;
+            animation-play-state: paused;
+        }
+
+        .animate-slide-in-left.animate-on-scroll {
+            animation: slideInLeft 1s ease-out forwards;
+            animation-play-state: paused;
         }
     </style>
 </head>
@@ -255,6 +244,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
     <section class="relative flex items-center justify-center min-h-screen overflow-hidden bg-gradient-to-br from-gray-900 to-purple-900">
         <div class="absolute inset-0 z-0 hero-bg"></div>
         <div class="absolute inset-0 z-10 bg-black bg-opacity-60"></div>
+
         <!-- Animated Background Elements -->
         <div class="absolute inset-0 overflow-hidden">
             <div class="absolute bg-purple-500 rounded-full -top-40 -right-40 w-80 h-80 mix-blend-multiply filter blur-xl opacity-20 animate-float"></div>
@@ -273,13 +263,13 @@ elseif (empty($featured_products) && !empty($all_products)) {
             </div>
 
             <!-- Main Heading -->
-            <h1 class="mb-8 text-5xl font-black leading-tight animate-slide-in-left md:text-7xl lg:text-8xl text-glow">
+            <h1 class="mb-8 text-5xl font-black leading-tight md:text-7xl lg:text-8xl text-glow animate-slide-in-left">
                 <span class="block">TECH</span>
                 <span class="block gradient-text">HAVEN</span>
             </h1>
 
             <!-- Subheading -->
-            <p class="max-w-4xl mx-auto mb-12 text-xl font-light leading-relaxed animate-fade-in md:text-2xl lg:text-3xl">
+            <p class="max-w-4xl mx-auto mb-12 text-xl font-light leading-relaxed md:text-2xl lg:text-3xl animate-fade-in">
                 Where <span class="font-bold text-purple-300">Innovation</span> Meets
                 <span class="font-bold text-blue-300">Excellence</span>. Discover the Future of Technology Today.
             </p>
@@ -301,8 +291,8 @@ elseif (empty($featured_products) && !empty($all_products)) {
             </div>
 
             <!-- Feature Highlights -->
-            <div class="grid grid-cols-1 gap-6 mt-12 text-left animate-fade-in md:grid-cols-3">
-                <div class="p-6 transition-all duration-300 bg-white border border-white bg-opacity-5 backdrop-blur-sm rounded-xl border-opacity-10 hover:bg-opacity-10">
+            <div class="grid grid-cols-1 gap-6 mt-12 text-left md:grid-cols-3">
+                <div class="p-6 transition-all duration-300 bg-white border border-white bg-opacity-5 backdrop-blur-sm rounded-xl border-opacity-10 hover:bg-opacity-10 animate-fade-in-up" style="animation-delay: 0.2s;">
                     <div class="flex items-center justify-center w-12 h-12 mb-4 bg-purple-500 rounded-lg">
                         <i class="text-xl text-white fas fa-shipping-fast"></i>
                     </div>
@@ -310,7 +300,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
                     <p class="text-sm text-gray-300">Free delivery on orders over $50</p>
                 </div>
 
-                <div class="p-6 transition-all duration-300 bg-white border border-white bg-opacity-5 backdrop-blur-sm rounded-xl border-opacity-10 hover:bg-opacity-10">
+                <div class="p-6 transition-all duration-300 bg-white border border-white bg-opacity-5 backdrop-blur-sm rounded-xl border-opacity-10 hover:bg-opacity-10 animate-fade-in-up" style="animation-delay: 0.4s;">
                     <div class="flex items-center justify-center w-12 h-12 mb-4 bg-green-500 rounded-lg">
                         <i class="text-xl text-white fas fa-shield-alt"></i>
                     </div>
@@ -318,7 +308,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
                     <p class="text-sm text-gray-300">Comprehensive protection included</p>
                 </div>
 
-                <div class="p-6 transition-all duration-300 bg-white border border-white bg-opacity-5 backdrop-blur-sm rounded-xl border-opacity-10 hover:bg-opacity-10">
+                <div class="p-6 transition-all duration-300 bg-white border border-white bg-opacity-5 backdrop-blur-sm rounded-xl border-opacity-10 hover:bg-opacity-10 animate-fade-in-up" style="animation-delay: 0.6s;">
                     <div class="flex items-center justify-center w-12 h-12 mb-4 bg-blue-500 rounded-lg">
                         <i class="text-xl text-white fas fa-headset"></i>
                     </div>
@@ -326,7 +316,6 @@ elseif (empty($featured_products) && !empty($all_products)) {
                     <p class="text-sm text-gray-300">Expert help whenever you need it</p>
                 </div>
             </div>
-
 
             <!-- Scroll Indicator -->
             <div class="absolute transform -translate-x-1/2 bottom-8 left-1/2 animate-bounce">
@@ -337,12 +326,13 @@ elseif (empty($featured_products) && !empty($all_products)) {
                     </div>
                 </a>
             </div>
+        </div>
     </section>
 
     <!-- Categories Section -->
     <section id="categories" class="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div class="container px-4 mx-auto">
-            <div class="mb-16 text-center">
+            <div class="mb-16 text-center animate-on-scroll animate-fade-in-up">
                 <h2 class="mb-6 text-4xl font-black text-gray-900 md:text-5xl">
                     Shop by <span class="gradient-text">Category</span>
                 </h2>
@@ -353,7 +343,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
 
             <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
                 <?php foreach ($categories as $index => $category): ?>
-                    <a href="products.php?category=<?= $category['slug'] ?>" class="group category-card">
+                    <a href="products.php?category=<?= $category['slug'] ?>" class="group category-card animate-on-scroll animate-fade-in-up" style="animation-delay: <?= $index * 0.1 ?>s;">
                         <div class="p-8 text-center transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-2xl hover:shadow-2xl group-hover:border-purple-200">
                             <div class="flex items-center justify-center w-20 h-20 mx-auto mb-6 transition-transform duration-300 shadow-lg rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-600 group-hover:scale-110">
                                 <i class="text-2xl text-white fas 
@@ -380,7 +370,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
     <!-- Featured Products -->
     <section id="featured" class="py-20 bg-gradient-to-br from-gray-900 to-purple-900">
         <div class="container px-4 mx-auto">
-            <div class="mb-16 text-center">
+            <div class="mb-16 text-center animate-on-scroll animate-fade-in-up">
                 <h2 class="mb-6 text-4xl font-black text-white md:text-5xl">
                     <span class="text-white">Featured</span>
                     <span class="gradient-text">Products</span>
@@ -392,7 +382,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
 
             <?php if (!empty($featured_products)): ?>
                 <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-                    <?php foreach ($featured_products as $product):
+                    <?php foreach ($featured_products as $index => $product):
                         // Safe data access with null coalescing
                         $product_id = $product['id'] ?? 0;
                         $product_name = $product['name'] ?? 'Unknown Product';
@@ -406,11 +396,13 @@ elseif (empty($featured_products) && !empty($all_products)) {
 
                         $discount_percentage = calculateDiscountPercentage($product_price, $discount_price);
 
-                        // Check image paths
+                        // Improved image path checking
                         $image_paths = [
                             '../assets/uploads/products/' . ($product['featured_image'] ?? ''),
                             './assets/uploads/products/' . ($product['featured_image'] ?? ''),
-                            '../admin/assets/uploads/products/' . ($product['featured_image'] ?? '')
+                            '../admin/assets/uploads/products/' . ($product['featured_image'] ?? ''),
+                            'assets/uploads/products/' . ($product['featured_image'] ?? ''),
+                            '../uploads/products/' . ($product['featured_image'] ?? '')
                         ];
 
                         $image_src = '';
@@ -420,20 +412,18 @@ elseif (empty($featured_products) && !empty($all_products)) {
                                 break;
                             }
                         }
-                        $image_exists = !empty($image_src);
+
+                        // Fallback to placeholder if no image found
+                        if (empty($image_src)) {
+                            $image_src = 'https://via.placeholder.com/300x200?text=No+Image';
+                        }
                     ?>
-                        <div class="overflow-hidden bg-white border border-gray-100 shadow-lg group product-card rounded-2xl hover:shadow-2xl">
+                        <div class="overflow-hidden bg-white border border-gray-100 shadow-lg group product-card rounded-2xl hover:shadow-2xl animate-on-scroll animate-fade-in-up" style="animation-delay: <?= $index * 0.1 ?>s;">
                             <div class="relative overflow-hidden">
-                                <?php if ($image_exists): ?>
-                                    <img src="<?= $image_src ?>"
-                                        alt="<?= htmlspecialchars($product_name) ?>"
-                                        class="object-cover w-full h-48 transition-transform duration-500 transform group-hover:scale-105">
-                                <?php else: ?>
-                                    <div class="flex items-center justify-center w-full h-48 bg-gradient-to-br from-gray-200 to-gray-300">
-                                        <i class="text-4xl text-gray-400 fas fa-image"></i>
-                                        <span class="ml-2 text-sm text-gray-500">No image</span>
-                                    </div>
-                                <?php endif; ?>
+                                <img src="<?= $image_src ?>"
+                                    alt="<?= htmlspecialchars($product_name) ?>"
+                                    class="object-cover w-full h-48 transition-transform duration-500 transform group-hover:scale-105"
+                                    onerror="this.src='https://via.placeholder.com/300x200?text=Image+Error'">
 
                                 <?php if ($discount_percentage > 0): ?>
                                     <span class="absolute px-3 py-1 text-sm font-bold text-white rounded-full shadow-lg top-4 left-4 bg-gradient-to-r from-red-500 to-pink-500">
@@ -476,7 +466,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
                                         <?php endif; ?>
                                     </div>
                                     <span class="text-xs font-semibold px-2 py-1 rounded-full 
-                                    <?= $stock_quantity > 10 ? 'bg-green-100 text-green-800' : ($stock_quantity > 0 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800') ?>">
+                                        <?= $stock_quantity > 10 ? 'bg-green-100 text-green-800' : ($stock_quantity > 0 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800') ?>">
                                         <?= $stock_quantity ?> in stock
                                     </span>
                                 </div>
@@ -490,7 +480,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
                     <?php endforeach; ?>
                 </div>
 
-                <div class="mt-12 text-center">
+                <div class="mt-12 text-center animate-on-scroll animate-fade-in-up">
                     <a href="products.php"
                         class="inline-flex items-center px-8 py-4 text-lg font-bold text-purple-600 transition-all duration-300 bg-white border border-purple-200 shadow-lg rounded-xl hover:bg-gray-50 hover:shadow-xl group">
                         <span>View All Products</span>
@@ -498,7 +488,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
                     </a>
                 </div>
             <?php else: ?>
-                <div class="py-16 text-center bg-white bg-opacity-10 rounded-2xl backdrop-blur-sm">
+                <div class="py-16 text-center bg-white bg-opacity-10 rounded-2xl backdrop-blur-sm animate-on-scroll animate-fade-in-up">
                     <i class="mb-6 text-6xl text-gray-400 fas fa-box-open"></i>
                     <h3 class="mb-4 text-2xl font-bold text-white">No Products Available</h3>
                     <p class="mb-8 text-lg text-gray-300">We're preparing something amazing for you!</p>
@@ -514,10 +504,11 @@ elseif (empty($featured_products) && !empty($all_products)) {
             <?php endif; ?>
         </div>
     </section>
+
     <!-- Why Choose Us -->
     <section class="py-20 bg-gradient-to-b from-white to-gray-50">
         <div class="container px-4 mx-auto">
-            <div class="mb-16 text-center">
+            <div class="mb-16 text-center animate-on-scroll animate-fade-in-up">
                 <h2 class="mb-6 text-4xl font-black text-gray-900 md:text-5xl">
                     Why Choose <span class="gradient-text">TechHaven</span>?
                 </h2>
@@ -527,7 +518,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
             </div>
 
             <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-                <div class="p-8 text-center transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-2xl hover:shadow-xl hover:border-purple-200">
+                <div class="p-8 text-center transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-2xl hover:shadow-xl hover:border-purple-200 animate-on-scroll animate-fade-in-up" style="animation-delay: 0.1s;">
                     <div class="flex items-center justify-center w-20 h-20 mx-auto mb-6 shadow-lg rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600">
                         <i class="text-2xl text-white fas fa-shipping-fast"></i>
                     </div>
@@ -537,7 +528,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
                     </p>
                 </div>
 
-                <div class="p-8 text-center transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-2xl hover:shadow-xl hover:border-blue-200">
+                <div class="p-8 text-center transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-2xl hover:shadow-xl hover:border-blue-200 animate-on-scroll animate-fade-in-up" style="animation-delay: 0.2s;">
                     <div class="flex items-center justify-center w-20 h-20 mx-auto mb-6 shadow-lg rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600">
                         <i class="text-2xl text-white fas fa-shield-alt"></i>
                     </div>
@@ -547,7 +538,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
                     </p>
                 </div>
 
-                <div class="p-8 text-center transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-2xl hover:shadow-xl hover:border-purple-200">
+                <div class="p-8 text-center transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-2xl hover:shadow-xl hover:border-purple-200 animate-on-scroll animate-fade-in-up" style="animation-delay: 0.3s;">
                     <div class="flex items-center justify-center w-20 h-20 mx-auto mb-6 shadow-lg rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600">
                         <i class="text-2xl text-white fas fa-headset"></i>
                     </div>
@@ -563,13 +554,13 @@ elseif (empty($featured_products) && !empty($all_products)) {
     <!-- Final CTA -->
     <section class="py-20 bg-gradient-to-r from-purple-600 to-indigo-700">
         <div class="container px-4 mx-auto text-center">
-            <h2 class="mb-6 text-4xl font-black text-white md:text-5xl">
+            <h2 class="mb-6 text-4xl font-black text-white md:text-5xl animate-on-scroll animate-fade-in-up">
                 Ready to Experience the Future?
             </h2>
-            <p class="max-w-2xl mx-auto mb-12 text-xl text-purple-100">
+            <p class="max-w-2xl mx-auto mb-12 text-xl text-purple-100 animate-on-scroll animate-fade-in-up" style="animation-delay: 0.1s;">
                 Join thousands of satisfied customers who trust TechHaven for their technology needs.
             </p>
-            <div class="flex flex-col items-center justify-center gap-6 sm:flex-row">
+            <div class="flex flex-col items-center justify-center gap-6 sm:flex-row animate-on-scroll animate-fade-in-up" style="animation-delay: 0.2s;">
                 <a href="products.php"
                     class="px-12 py-5 text-xl font-bold text-purple-600 transition-all duration-300 bg-white shadow-2xl rounded-2xl hover:bg-gray-100 hover:scale-105">
                     <i class="mr-4 fas fa-shopping-cart"></i>Start Shopping Now
@@ -581,24 +572,27 @@ elseif (empty($featured_products) && !empty($all_products)) {
             </div>
         </div>
     </section>
-    <?php include '../includes/footer.php'; ?>
-    <script>
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
 
-        // Add intersection observer for animations
+    <?php include '../includes/footer.php'; ?>
+
+    <script>
+        // Improved animation system with Intersection Observer
         document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Enhanced Intersection Observer for animations
             const observerOptions = {
                 threshold: 0.1,
                 rootMargin: '0px 0px -50px 0px'
@@ -608,18 +602,21 @@ elseif (empty($featured_products) && !empty($all_products)) {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.style.animationPlayState = 'running';
+                        // Optional: unobserve after animation starts
+                        // observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
 
-            // Observe animated elements
-            document.querySelectorAll('.animate-fade-in-up, .animate-fade-in, .animate-slide-in-left').forEach(el => {
+            // Observe all animated elements
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
                 observer.observe(el);
             });
-        });
-        document.addEventListener('DOMContentLoaded', function() {
-            const elements = document.querySelectorAll('.text-glow');
-            elements.forEach(element => {
+
+            // Fix for text-glow animation restart
+            const glowElements = document.querySelectorAll('.text-glow');
+            glowElements.forEach(element => {
+                // Force reflow to restart animation if needed
                 element.style.animation = 'none';
                 element.offsetHeight; // Trigger reflow
                 element.style.animation = null;
