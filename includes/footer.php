@@ -64,9 +64,9 @@
                     &copy; <?= date('Y') ?> TechHaven. All rights reserved.
                 </p>
                 <div class="flex mt-4 space-x-6 md:mt-0">
-                    <a href="#" class="text-sm text-gray-300 transition duration-300 hover:text-white">Privacy Policy</a>
-                    <a href="#" class="text-sm text-gray-300 transition duration-300 hover:text-white">Terms of Service</a>
-                    <a href="#" class="text-sm text-gray-300 transition duration-300 hover:text-white">Returns Policy</a>
+                    <a href="privacy-policy.php" class="text-sm text-gray-300 transition duration-300 hover:text-white">Privacy Policy</a>
+                    <a href="terms-of-service.php" class="text-sm text-gray-300 transition duration-300 hover:text-white">Terms of Service</a>
+                    <a href="returns-policy.php" class="text-sm text-gray-300 transition duration-300 hover:text-white">Returns Policy</a>
                 </div>
             </div>
         </div>
