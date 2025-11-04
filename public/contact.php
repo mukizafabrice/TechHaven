@@ -11,6 +11,8 @@ if ($_POST) {
     $email = sanitizeInput($_POST['email']);
     $subject = sanitizeInput($_POST['subject']);
     $message = sanitizeInput($_POST['message']);
+    $ip_address = $_SERVER['REMOTE_ADDR'];
+    $user_agent = $_SERVER['HTTP_USER_AGENT'];
 
     // Basic validation
     $errors = [];
@@ -36,16 +38,41 @@ if ($_POST) {
     }
 
     if (empty($errors)) {
-        // In a real application, you would:
-        // 1. Send an email
-        // 2. Save to database
-        // 3. Send notification to admin
+        try {
+            // Start transaction
+            $pdo->beginTransaction();
 
-        // For now, we'll just show a success message
-        $success_message = "Thank you for your message, $name! We'll get back to you within 24 hours.";
+            // 1. Save to database
+            $stmt = $pdo->prepare("INSERT INTO contact_messages (name, email, subject, message, ip_address, user_agent, status) VALUES (?, ?, ?, ?, ?, ?, 'new')");
+            $stmt->execute([$name, $email, $subject, $message, $ip_address, $user_agent]);
+            $message_id = $pdo->lastInsertId();
 
-        // Clear form
-        $_POST = [];
+            // 2. Include email functions (use the correct path)
+            require_once '../includes/email.php';
+
+            // 3. Send email to admin
+            $admin_notification_sent = sendContactNotification($name, $email, $subject, $message, $message_id);
+
+            // 4. Send confirmation email to user
+            $user_confirmation_sent = sendUserConfirmation($name, $email, $subject, $message);
+
+            // Commit transaction
+            $pdo->commit();
+
+            // Success message
+            $success_message = "Thank you for your message, $name! ";
+            if ($user_confirmation_sent) {
+                $success_message .= "We've sent a confirmation email to <strong>$email</strong>. ";
+            }
+            $success_message .= "Our team will get back to you within 24 hours.";
+
+            // Clear form
+            $_POST = [];
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            $error_message = "Sorry, there was an error. Please try again or contact us directly.";
+            error_log("Contact form error: " . $e->getMessage());
+        }
     } else {
         $error_message = implode("<br>", $errors);
     }

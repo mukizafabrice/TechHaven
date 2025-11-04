@@ -326,3 +326,104 @@ function calculateDiscountPercentage($original_price, $discount_price)
     }
     return 0;
 }
+
+
+
+
+
+
+/**
+ * Get current admin data
+ */
+function getCurrentAdmin($pdo)
+{
+    if (!isset($_SESSION['admin_id'])) {
+        return null;
+    }
+
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM admins WHERE id = ? AND is_active = TRUE");
+        $stmt->execute([$_SESSION['admin_id']]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        error_log("Error getting admin data: " . $e->getMessage());
+        return null;
+    }
+}
+
+/**
+ * Update admin profile
+ */
+function updateAdminProfile($pdo, $admin_id, $full_name, $email)
+{
+    try {
+        // Check if email already exists for another admin
+        $check_stmt = $pdo->prepare("SELECT id FROM admins WHERE email = ? AND id != ?");
+        $check_stmt->execute([$email, $admin_id]);
+
+        if ($check_stmt->fetch()) {
+            return ['success' => false, 'message' => 'Email already exists for another admin.'];
+        }
+
+        // Update profile
+        $stmt = $pdo->prepare("UPDATE admins SET full_name = ?, email = ?, updated_at = NOW() WHERE id = ?");
+        $stmt->execute([$full_name, $email, $admin_id]);
+
+        return ['success' => true, 'message' => 'Profile updated successfully!'];
+    } catch (Exception $e) {
+        error_log("Error updating admin profile: " . $e->getMessage());
+        return ['success' => false, 'message' => 'Error updating profile: ' . $e->getMessage()];
+    }
+}
+
+/**
+ * Change admin password
+ */
+function changeAdminPassword($pdo, $admin_id, $current_password, $new_password, $confirm_password)
+{
+    try {
+        // Get current password hash
+        $stmt = $pdo->prepare("SELECT password_hash FROM admins WHERE id = ?");
+        $stmt->execute([$admin_id]);
+        $admin = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$admin) {
+            return ['success' => false, 'message' => 'Admin not found.'];
+        }
+
+        // Verify current password
+        if (!password_verify($current_password, $admin['password_hash'])) {
+            return ['success' => false, 'message' => 'Current password is incorrect.'];
+        }
+
+        // Check if new passwords match
+        if ($new_password !== $confirm_password) {
+            return ['success' => false, 'message' => 'New passwords do not match.'];
+        }
+
+        // Validate new password strength
+        if (strlen($new_password) < 8) {
+            return ['success' => false, 'message' => 'New password must be at least 8 characters long.'];
+        }
+
+        // Hash new password
+        $new_password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+
+        // Update password
+        $update_stmt = $pdo->prepare("UPDATE admins SET password_hash = ?, updated_at = NOW() WHERE id = ?");
+        $update_stmt->execute([$new_password_hash, $admin_id]);
+
+        return ['success' => true, 'message' => 'Password changed successfully!'];
+    } catch (Exception $e) {
+        error_log("Error changing admin password: " . $e->getMessage());
+        return ['success' => false, 'message' => 'Error changing password: ' . $e->getMessage()];
+    }
+}
+
+/**
+ * Sanitize input data
+ */
+// function sanitizeInput($data)
+// {
+//     return htmlspecialchars(strip_tags(trim($data)));
+// }

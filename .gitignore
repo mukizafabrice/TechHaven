@@ -1,0 +1,208 @@
+# =============================================
+# TechHaven E-commerce Project Git Ignore
+# =============================================
+
+# =======================
+# Environment & Config Files
+# =======================
+
+# Environment variables (never commit secrets!)
+.env
+.env.local
+.env.production
+.env.development
+.env.testing
+
+# Configuration files with sensitive data
+/includes/config.php
+/includes/config.local.php
+/includes/config.production.php
+/includes/config/database.php
+/includes/config/email.php
+
+# Composer environment
+/composer.env
+
+# =======================
+# Dependency Directories
+# =======================
+
+# Composer dependencies
+/vendor/
+
+# Node.js dependencies
+/node_modules/
+/npm-debug.log*
+/yarn-debug.log*
+/yarn-error.log*
+
+# =======================
+# Runtime & System Files
+# =======================
+
+# Session files
+/sess_*
+*.sess
+
+# Cache files
+/cache/
+*.cache
+
+# Log files
+*.log
+/logs/
+/error_log
+/access_log
+
+# Temporary files
+/tmp/
+/temp/
+*.tmp
+*.temp
+
+# =======================
+# Uploaded Files & Media
+# =======================
+
+# User uploaded files
+/assets/uploads/
+!/assets/uploads/.gitkeep
+
+# Product images
+/assets/images/products/uploads/
+!/assets/images/products/uploads/.gitkeep
+
+# Category images
+/assets/images/categories/uploads/
+!/assets/images/categories/uploads/.gitkeep
+
+# User avatars
+/assets/images/avatars/uploads/
+!/assets/images/avatars/uploads/.gitkeep
+
+# =======================
+# Development & IDE Files
+# =======================
+
+# PHPStorm
+/.idea/
+*.iws
+
+# VS Code
+/.vscode/
+*.code-workspace
+
+# NetBeans
+/nbproject/
+
+# Eclipse
+/.buildpath
+/.project
+/.settings/
+
+# =======================
+# Operating System Files
+# =======================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# =======================
+# Database & Backup Files
+# =======================
+
+# Database dumps
+*.sql
+*.sqlite
+*.db
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# =======================
+# Composer & Package Files
+# =======================
+
+# Composer
+/composer.lock
+/composer.phar
+
+# Composer vendor (already ignored, but being explicit)
+/vendor/
+
+# =======================
+# Testing & Build Files
+# =======================
+
+# PHPUnit
+/phpunit.xml
+.phpunit.result.cache
+
+# Code coverage
+/clover.xml
+/coverage/
+
+# Build artifacts
+/build/
+/dist/
+
+# =======================
+# SSL & Security Files
+# =======================
+
+# SSL certificates
+*.key
+*.pem
+*.crt
+*.csr
+
+# Security
+/.htpasswd
+/security/
+
+# =======================
+# Email & Cache Files
+# =======================
+
+# Email testing
+/email-test.log
+/mail.log
+
+# Cache directories
+/var/cache/
+*.cache
+
+# =======================
+# Custom Project Files
+# =======================
+/admin/uploads/products/
+/admin/uploads/avatars/
+
+# Custom project-specific ignores
+/storage/framework/cache/
+/storage/framework/sessions/
+/storage/framework/views/
+
+# Development tools
+/.php-cs-fixer.cache
+/.php-cs-fixer.php
+
+# =======================
+# Keep Empty Directories
+# =======================
+
+# Keep empty directories but ignore their contents
+!.gitkeep

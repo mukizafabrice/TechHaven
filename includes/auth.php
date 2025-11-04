@@ -48,18 +48,18 @@ function adminLogout()
 }
 
 // Get current admin info
-function getCurrentAdmin($pdo)
-{
-    if (!isset($_SESSION['admin_id'])) {
-        return false;
-    }
+// function getCurrentAdmin($pdo)
+// {
+//     if (!isset($_SESSION['admin_id'])) {
+//         return false;
+//     }
 
-    try {
-        $stmt = $pdo->prepare("SELECT * FROM admins WHERE id = ?");
-        $stmt->execute([$_SESSION['admin_id']]);
-        return $stmt->fetch();
-    } catch (PDOException $e) {
-        error_log("Error fetching admin data: " . $e->getMessage());
-        return false;
-    }
-}
+//     try {
+//         $stmt = $pdo->prepare("SELECT * FROM admins WHERE id = ?");
+//         $stmt->execute([$_SESSION['admin_id']]);
+//         return $stmt->fetch();
+//     } catch (PDOException $e) {
+//         error_log("Error fetching admin data: " . $e->getMessage());
+//         return false;
+//     }
+// }
