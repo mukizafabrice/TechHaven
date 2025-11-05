@@ -1,74 +1,70 @@
-            </div>
-            </main>
-            </div>
+<script>
+    // Mobile menu toggle
+    const mobileButton = document.getElementById('mobileMenuButton');
+    const sidebar = document.querySelector('.sidebar');
 
-            <!-- JavaScript -->
-            <script>
-                // Mobile menu toggle
-                document.getElementById('mobileMenuButton').addEventListener('click', function() {
-                    document.querySelector('.sidebar').classList.toggle('active');
-                });
+    if (mobileButton && sidebar) {
+        mobileButton.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
+        });
 
-                // Close mobile menu when clicking outside
-                document.addEventListener('click', function(e) {
-                    const sidebar = document.querySelector('.sidebar');
-                    const mobileButton = document.getElementById('mobileMenuButton');
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768 &&
+                !sidebar.contains(e.target) &&
+                !mobileButton.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+    }
 
-                    if (window.innerWidth <= 768 &&
-                        !sidebar.contains(e.target) &&
-                        !mobileButton.contains(e.target)) {
-                        sidebar.classList.remove('active');
-                    }
-                });
-
-                // Confirm delete actions
-                document.addEventListener('DOMContentLoaded', function() {
-                    const deleteButtons = document.querySelectorAll('.delete-btn');
-                    deleteButtons.forEach(button => {
-                        button.addEventListener('click', function(e) {
-                            if (!confirm('Are you sure you want to delete this item? This action cannot be undone.')) {
-                                e.preventDefault();
-                            }
-                        });
-                    });
-                });
-
-                // Image preview for file inputs
-                function previewImage(input, previewId) {
-                    const preview = document.getElementById(previewId);
-                    const file = input.files[0];
-                    const reader = new FileReader();
-
-                    reader.onloadend = function() {
-                        preview.src = reader.result;
-                        preview.classList.remove('hidden');
-                    }
-
-                    if (file) {
-                        reader.readAsDataURL(file);
-                    } else {
-                        preview.src = '';
-                        preview.classList.add('hidden');
-                    }
+    // Confirm delete actions
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (!confirm('Are you sure you want to delete this item? This action cannot be undone.')) {
+                    e.preventDefault();
                 }
+            });
+        });
+    });
 
-                // Form validation
-                function validateForm(form) {
-                    const requiredFields = form.querySelectorAll('[required]');
-                    let isValid = true;
+    // Image preview for file inputs
+    function previewImage(input, previewId) {
+        const preview = document.getElementById(previewId);
+        if (!preview) return;
 
-                    requiredFields.forEach(field => {
-                        if (!field.value.trim()) {
-                            field.classList.add('border-red-500');
-                            isValid = false;
-                        } else {
-                            field.classList.remove('border-red-500');
-                        }
-                    });
+        const file = input.files[0];
+        const reader = new FileReader();
 
-                    return isValid;
-                }
-            </script>
-            </body>
+        reader.onloadend = function() {
+            preview.src = reader.result;
+            preview.classList.remove('hidden');
+        }
 
-            </html>
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = '';
+            preview.classList.add('hidden');
+        }
+    }
+
+    // Form validation
+    function validateForm(form) {
+        const requiredFields = form.querySelectorAll('[required]');
+        let isValid = true;
+
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                field.classList.add('border-red-500');
+                isValid = false;
+            } else {
+                field.classList.remove('border-red-500');
+            }
+        });
+
+        return isValid;
+    }
+</script>

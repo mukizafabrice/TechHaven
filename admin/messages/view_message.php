@@ -54,10 +54,10 @@ $page_title = "View Message - #" . $message['id'];
 include '../../includes/admin-header.php';
 ?>
 
-<div class="container mx-auto px-4 py-6">
+<div class="container px-4 py-6 mx-auto">
     <!-- Display any error messages from session -->
     <?php if (isset($_SESSION['error_message'])): ?>
-        <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+        <div class="px-4 py-3 mb-6 text-red-700 border border-red-200 rounded-lg bg-red-50">
             <?= $_SESSION['error_message'] ?>
             <?php unset($_SESSION['error_message']); ?>
         </div>
@@ -66,35 +66,35 @@ include '../../includes/admin-header.php';
     <!-- Header -->
     <div class="flex items-center justify-between mb-6">
         <div>
-            <nav class="flex items-center space-x-2 text-sm text-gray-600 mb-2">
-                <a href="../index.php" class="hover:text-blue-600 transition duration-300">
+            <nav class="flex items-center mb-2 space-x-2 text-sm text-gray-600">
+                <a href="../index.php" class="transition duration-300 hover:text-blue-600">
                     <i class="fas fa-home"></i>
                 </a>
                 <span class="text-gray-400">/</span>
-                <a href="index.php" class="hover:text-blue-600 transition duration-300">Messages</a>
+                <a href="index.php" class="transition duration-300 hover:text-blue-600">Messages</a>
                 <span class="text-gray-400">/</span>
-                <span class="text-gray-800 font-medium">View Message #<?= $message['id'] ?></span>
+                <span class="font-medium text-gray-800">View Message #<?= $message['id'] ?></span>
             </nav>
             <h1 class="text-3xl font-bold text-gray-800"><?= htmlspecialchars($message['subject']) ?></h1>
-            <p class="text-gray-600 mt-1">From: <?= htmlspecialchars($message['name']) ?> &lt;<?= htmlspecialchars($message['email']) ?>&gt;</p>
+            <p class="mt-1 text-gray-600">From: <?= htmlspecialchars($message['name']) ?> &lt;<?= htmlspecialchars($message['email']) ?>&gt;</p>
         </div>
 
         <div class="flex items-center space-x-3">
-            <a href="index.php" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition duration-300 flex items-center">
-                <i class="fas fa-arrow-left mr-2"></i> Back to Messages
+            <a href="index.php" class="flex items-center px-4 py-2 text-gray-700 transition duration-300 bg-gray-300 rounded-lg hover:bg-gray-400">
+                <i class="mr-2 fas fa-arrow-left"></i> Back to Messages
             </a>
             <a href="mailto:<?= htmlspecialchars($message['email']) ?>?subject=Re: <?= htmlspecialchars($message['subject']) ?>"
-                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 flex items-center">
-                <i class="fas fa-reply mr-2"></i> Reply
+                class="flex items-center px-4 py-2 text-white transition duration-300 bg-blue-600 rounded-lg hover:bg-blue-700">
+                <i class="mr-2 fas fa-reply"></i> Reply
             </a>
         </div>
     </div>
 
     <!-- Message Content -->
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-4">
         <!-- Main Content -->
         <div class="lg:col-span-3">
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+            <div class="bg-white border border-gray-200 shadow-sm rounded-xl">
                 <!-- Status Bar -->
                 <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 rounded-t-xl">
                     <div class="flex items-center justify-between">
@@ -113,9 +113,9 @@ include '../../includes/admin-header.php';
                 <!-- Message Body -->
                 <div class="p-6">
                     <div class="mb-6">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Message Content:</h3>
-                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
-                            <div class="whitespace-pre-wrap text-gray-700 leading-relaxed">
+                        <h3 class="mb-3 text-lg font-semibold text-gray-800">Message Content:</h3>
+                        <div class="p-6 border border-gray-200 rounded-lg bg-gray-50">
+                            <div class="leading-relaxed text-gray-700 whitespace-pre-wrap">
                                 <?= nl2br(htmlspecialchars($message['message'])) ?>
                             </div>
                         </div>
@@ -124,26 +124,26 @@ include '../../includes/admin-header.php';
             </div>
 
             <!-- Technical Information -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 mt-6">
+            <div class="mt-6 bg-white border border-gray-200 shadow-sm rounded-xl">
                 <div class="px-6 py-4 border-b border-gray-200">
                     <h3 class="text-lg font-semibold text-gray-800">Technical Information</h3>
                 </div>
                 <div class="p-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div class="grid grid-cols-1 gap-4 text-sm md:grid-cols-2">
                         <div>
-                            <label class="font-medium text-gray-700 block mb-1">IP Address:</label>
-                            <p class="text-gray-600 font-mono"><?= htmlspecialchars($message['ip_address'] ?? 'Not available') ?></p>
+                            <label class="block mb-1 font-medium text-gray-700">IP Address:</label>
+                            <p class="font-mono text-gray-600"><?= htmlspecialchars($message['ip_address'] ?? 'Not available') ?></p>
                         </div>
                         <div>
-                            <label class="font-medium text-gray-700 block mb-1">User Agent:</label>
-                            <p class="text-gray-600 text-xs font-mono truncate"><?= htmlspecialchars($message['user_agent'] ?? 'Not available') ?></p>
+                            <label class="block mb-1 font-medium text-gray-700">User Agent:</label>
+                            <p class="font-mono text-xs text-gray-600 truncate"><?= htmlspecialchars($message['user_agent'] ?? 'Not available') ?></p>
                         </div>
                         <div>
-                            <label class="font-medium text-gray-700 block mb-1">Submission Date:</label>
+                            <label class="block mb-1 font-medium text-gray-700">Submission Date:</label>
                             <p class="text-gray-600"><?= $message['formatted_date'] ?></p>
                         </div>
                         <div>
-                            <label class="font-medium text-gray-700 block mb-1">Message Status:</label>
+                            <label class="block mb-1 font-medium text-gray-700">Message Status:</label>
                             <p class="text-gray-600"><?= ucfirst($message['status']) ?></p>
                         </div>
                     </div>
@@ -154,46 +154,46 @@ include '../../includes/admin-header.php';
         <!-- Sidebar -->
         <div class="lg:col-span-1">
             <!-- Quick Actions -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
-                <h3 class="font-semibold text-gray-800 mb-4">Quick Actions</h3>
+            <div class="p-6 mb-6 bg-white border border-gray-200 shadow-sm rounded-xl">
+                <h3 class="mb-4 font-semibold text-gray-800">Quick Actions</h3>
                 <div class="space-y-3">
-                    <a href="mailto:<?= htmlspecialchars($message['email']) ?>?subject=Re: <?= htmlspecialchars($message['subject']) ?>"
-                        class="w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition duration-300 flex items-center justify-center">
-                        <i class="fas fa-reply mr-2"></i> Reply via Email
+                    <a href="mailto:<?= htmlspecialchars($message['email']) ?>?subject=Re: <?= urlencode($message['subject']) ?>"
+                        class="flex items-center justify-center w-full px-4 py-3 text-white transition duration-300 bg-blue-600 rounded-lg hover:bg-blue-700">
+                        <i class="mr-2 fas fa-reply"></i> Reply via Email
                     </a>
 
                     <button onclick="changeStatus(<?= $message['id'] ?>, '<?= $message['status'] == 'read' ? 'new' : 'read' ?>')"
-                        class="w-full bg-green-600 text-white px-4 py-3 rounded-lg hover:bg-green-700 transition duration-300 flex items-center justify-center">
+                        class="flex items-center justify-center w-full px-4 py-3 text-white transition duration-300 bg-green-600 rounded-lg hover:bg-green-700">
                         <i class="fas fa-<?= $message['status'] == 'read' ? 'envelope' : 'check' ?> mr-2"></i>
                         Mark as <?= $message['status'] == 'read' ? 'Unread' : 'Read' ?>
                     </button>
 
                     <button onclick="changeStatus(<?= $message['id'] ?>, 'replied')"
-                        class="w-full bg-purple-600 text-white px-4 py-3 rounded-lg hover:bg-purple-700 transition duration-300 flex items-center justify-center">
-                        <i class="fas fa-check-double mr-2"></i> Mark as Replied
+                        class="flex items-center justify-center w-full px-4 py-3 text-white transition duration-300 bg-purple-600 rounded-lg hover:bg-purple-700">
+                        <i class="mr-2 fas fa-check-double"></i> Mark as Replied
                     </button>
 
                     <button onclick="changeStatus(<?= $message['id'] ?>, 'closed')"
-                        class="w-full bg-gray-600 text-white px-4 py-3 rounded-lg hover:bg-gray-700 transition duration-300 flex items-center justify-center">
-                        <i class="fas fa-archive mr-2"></i> Close Message
+                        class="flex items-center justify-center w-full px-4 py-3 text-white transition duration-300 bg-gray-600 rounded-lg hover:bg-gray-700">
+                        <i class="mr-2 fas fa-archive"></i> Close Message
                     </button>
                 </div>
             </div>
 
             <!-- Sender Information -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                <h3 class="font-semibold text-gray-800 mb-4">Sender Information</h3>
+            <div class="p-6 bg-white border border-gray-200 shadow-sm rounded-xl">
+                <h3 class="mb-4 font-semibold text-gray-800">Sender Information</h3>
                 <div class="space-y-3">
                     <div>
-                        <label class="text-xs font-medium text-gray-600 uppercase tracking-wide">Full Name</label>
-                        <p class="text-gray-900 font-medium"><?= htmlspecialchars($message['name']) ?></p>
+                        <label class="text-xs font-medium tracking-wide text-gray-600 uppercase">Full Name</label>
+                        <p class="font-medium text-gray-900"><?= htmlspecialchars($message['name']) ?></p>
                     </div>
                     <div>
-                        <label class="text-xs font-medium text-gray-600 uppercase tracking-wide">Email Address</label>
+                        <label class="text-xs font-medium tracking-wide text-gray-600 uppercase">Email Address</label>
                         <p class="text-gray-900 break-all"><?= htmlspecialchars($message['email']) ?></p>
                     </div>
                     <div>
-                        <label class="text-xs font-medium text-gray-600 uppercase tracking-wide">Subject</label>
+                        <label class="text-xs font-medium tracking-wide text-gray-600 uppercase">Subject</label>
                         <p class="text-gray-900"><?= htmlspecialchars($message['subject']) ?></p>
                     </div>
                 </div>
@@ -222,7 +222,7 @@ include '../../includes/admin-header.php';
         if (button) {
             originalHTML = button.innerHTML;
             originalDisabled = button.disabled;
-            button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Updating...';
+            button.innerHTML = '<i class="mr-2 fas fa-spinner fa-spin"></i> Updating...';
             button.disabled = true;
         }
 
