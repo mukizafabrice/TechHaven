@@ -120,7 +120,7 @@ if ($_POST) {
                             <div>
                                 <h3 class="text-lg font-semibold text-gray-900">Phone Number</h3>
                                 <p class="mt-1 text-gray-600">
-                                    +250 (783) 818-521<br>
+                                    +250780088390<br>
                                     <span class="text-sm text-gray-500">Mon-Fri from 9am to 6pm</span>
                                 </p>
                             </div>
@@ -346,7 +346,7 @@ if ($_POST) {
             <a href="mailto:info@techhaven.com" class="px-6 py-3 font-semibold text-white transition duration-300 bg-transparent border-2 border-white rounded-lg hover:bg-white hover:text-blue-600">
                 <i class="mr-2 fas fa-envelope"></i> Email Us
             </a>
-            <a href="https://wa.me/15551234567" target="_blank" class="px-6 py-3 font-semibold text-white transition duration-300 bg-green-500 rounded-lg hover:bg-green-600">
+            <a href="https://wa.me/250780088390" target="_blank" class="px-6 py-3 font-semibold text-white transition duration-300 bg-green-500 rounded-lg hover:bg-green-600">
                 <i class="mr-2 fab fa-whatsapp"></i> WhatsApp
             </a>
         </div>

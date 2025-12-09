@@ -63,7 +63,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo isset($page_title) ? $page_title . ' - Admin - TechHaven' : 'Admin - TechHaven'; ?></title>
+    <title><?php echo isset($page_title) ? $page_title . ' - Admin - Wima Ntore' : 'Admin - Wima Ntore'; ?></title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -142,7 +142,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <aside id="adminSidebar" class="admin-sidebar bg-gray-800 text-white w-64 fixed h-full z-40">
             <!-- Logo -->
             <div class="p-6 border-b border-gray-700">
-                <h1 class="text-xl font-bold text-white">TechHaven Admin</h1>
+                <h1 class="text-xl font-bold text-white">Wima Ntore Admin</h1>
                 <p class="text-sm text-gray-300 mt-1">Welcome, <?= htmlspecialchars($current_admin['full_name'] ?? 'Admin') ?></p>
             </div>
 

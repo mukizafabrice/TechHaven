@@ -6,7 +6,7 @@
             <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
                 <!-- Company Info -->
                 <div class="col-span-1 md:col-span-2">
-                    <h3 class="mb-4 text-2xl font-bold">TechHaven</h3>
+                    <h3 class="mb-4 text-2xl font-bold">Wima Ntore</h3>
                     <p class="mb-4 text-gray-300">
                         Your trusted partner for cutting-edge electronics and technology products.
                         We bring you the latest gadgets with competitive prices and excellent service.
@@ -48,7 +48,7 @@
                         </li>
                         <li class="flex items-center space-x-2">
                             <i class="fas fa-phone"></i>
-                            <span>+250 (783) 818-521</span>
+                            <span>+250780088390</span>
                         </li>
                         <li class="flex items-center space-x-2">
                             <i class="fas fa-envelope"></i>
@@ -61,7 +61,7 @@
             <!-- Bottom Bar -->
             <div class="flex flex-col items-center justify-between pt-8 mt-8 border-t border-gray-700 md:flex-row">
                 <p class="text-sm text-gray-300">
-                    &copy; <?= date('Y') ?> TechHaven. All rights reserved.
+                    &copy; <?= date('Y') ?> Wima Ntore. All rights reserved.
                 </p>
                 <div class="flex mt-4 space-x-6 md:mt-0">
                     <a href="privacy-policy.php" class="text-sm text-gray-300 transition duration-300 hover:text-white">Privacy Policy</a>

@@ -130,19 +130,63 @@ elseif (empty($featured_products) && !empty($all_products)) {
 
         @keyframes backgroundCycle {
             0% {
+                background-image: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+                opacity: 1;
+            }
+
+            24% {
+                opacity: 1;
+            }
+
+            26% {
+                opacity: 0;
+            }
+
+            28% {
+                background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+                opacity: 0;
+            }
+
+            30% {
+                opacity: 1;
+            }
+
+            54% {
+                opacity: 1;
+            }
+
+            56% {
+                opacity: 0;
+            }
+
+            58% {
                 background-image: url('https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+                opacity: 0;
             }
 
-            33% {
-                background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80');
+            60% {
+                opacity: 1;
             }
 
-            66% {
-                background-image: url('https://images.unsplash.com/photo-1468436139062-f60a71c5c892?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            84% {
+                opacity: 1;
+            }
+
+            86% {
+                opacity: 0;
+            }
+
+            88% {
+                background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+                opacity: 0;
+            }
+
+            90% {
+                opacity: 1;
             }
 
             100% {
-                background-image: url('https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+                opacity: 1;
             }
         }
 
@@ -210,7 +254,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
         }
 
         .hero-bg {
-            animation: backgroundCycle 18s ease-in-out infinite;
+            animation: backgroundCycle 32s ease-in-out infinite;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -241,89 +285,39 @@ elseif (empty($featured_products) && !empty($all_products)) {
 
 <body class="font-sans antialiased">
     <!-- Hero Section -->
-    <section class="relative flex items-center justify-center min-h-screen overflow-hidden bg-gradient-to-br from-gray-900 to-purple-900">
+    <section class="relative flex items-center justify-center min-h-screen overflow-hidden">
         <div class="absolute inset-0 z-0 hero-bg"></div>
-        <div class="absolute inset-0 z-10 bg-black bg-opacity-60"></div>
-
-        <!-- Animated Background Elements -->
-        <div class="absolute inset-0 overflow-hidden">
-            <div class="absolute bg-purple-500 rounded-full -top-40 -right-40 w-80 h-80 mix-blend-multiply filter blur-xl opacity-20 animate-float"></div>
-            <div class="absolute bg-indigo-500 rounded-full -bottom-40 -left-40 w-80 h-80 mix-blend-multiply filter blur-xl opacity-20 animate-float" style="animation-delay: 1.5s;"></div>
-            <div class="absolute transform -translate-x-1/2 -translate-y-1/2 bg-pink-500 rounded-full top-1/2 left-1/2 w-96 h-96 mix-blend-multiply filter blur-xl opacity-10 animate-float" style="animation-delay: 0.7s;"></div>
-        </div>
+        <div class="absolute inset-0 z-10 bg-black bg-opacity-40"></div>
 
         <!-- Content -->
-        <div class="relative z-10 max-w-6xl px-4 mx-auto text-center text-white">
+        <div class="relative z-20 max-w-5xl px-4 mx-auto text-center text-white">
             <!-- Animated Badge -->
-            <div class="mb-8 animate-fade-in-up">
-                <span class="inline-flex items-center px-6 py-3 text-lg font-semibold bg-white border border-white rounded-full bg-opacity-10 backdrop-blur-sm border-opacity-20">
-                    <i class="mr-3 text-yellow-400 fas fa-bolt animate-pulse"></i>
-                    Premium Electronics & Innovation
+            <div class="mb-6 animate-fade-in-up">
+                <span class="inline-flex items-center px-6 py-2 text-sm font-semibold bg-white border border-white rounded-full bg-opacity-10 border-opacity-30 backdrop-blur-sm">
+                    <i class="mr-2 fas fa-star"></i>
+                    Wima Ntore - Your Tech Destination
                 </span>
             </div>
 
             <!-- Main Heading -->
-            <h1 class="mb-8 text-5xl font-black leading-tight md:text-7xl lg:text-8xl text-glow animate-slide-in-left">
-                <span class="block">TECH</span>
-                <span class="block gradient-text">HAVEN</span>
+            <h1 class="mb-6 text-6xl font-black leading-tight md:text-7xl lg:text-8xl animate-slide-in-left">
+                WIMA NTORE
             </h1>
 
             <!-- Subheading -->
-            <p class="max-w-4xl mx-auto mb-12 text-xl font-light leading-relaxed md:text-2xl lg:text-3xl animate-fade-in">
-                Where <span class="font-bold text-purple-300">Innovation</span> Meets
-                <span class="font-bold text-blue-300">Excellence</span>. Discover the Future of Technology Today.
+            <p class="max-w-3xl mx-auto mb-10 text-lg font-light leading-relaxed md:text-xl animate-fade-in">
+                Premium electronics at unbeatable prices. Quality products, fast delivery, trusted service.
             </p>
 
             <!-- CTA Buttons -->
-            <div class="flex flex-col items-center justify-center gap-6 mb-16 animate-fade-in-up sm:flex-row">
+            <div class="flex flex-col justify-center gap-4 sm:flex-row animate-fade-in-up">
                 <a href="products.php"
-                    class="flex items-center px-12 py-5 text-xl font-bold text-white shadow-2xl btn-primary rounded-2xl group">
-                    <i class="mr-4 text-xl fas fa-rocket"></i>
-                    <span>Explore Products</span>
-                    <i class="ml-4 transition-transform duration-300 fas fa-arrow-right group-hover:translate-x-2"></i>
+                    class="px-10 py-4 text-lg font-bold text-white transition-all duration-300 bg-blue-600 rounded-lg shadow-lg hover:bg-blue-700">
+                    <i class="mr-2 fas fa-shopping-cart"></i>Shop Now
                 </a>
-
                 <a href="#featured"
-                    class="px-12 py-5 text-xl font-bold text-white transition-all duration-300 border-2 border-white shadow-2xl border-opacity-40 rounded-2xl hover:bg-white hover:bg-opacity-10 hover:border-opacity-60 backdrop-blur-sm">
-                    <i class="mr-4 fas fa-play-circle"></i>
-                    Featured Products
-                </a>
-            </div>
-
-            <!-- Feature Highlights -->
-            <div class="grid grid-cols-1 gap-6 mt-12 text-left md:grid-cols-3">
-                <div class="p-6 transition-all duration-300 bg-white border border-white bg-opacity-5 backdrop-blur-sm rounded-xl border-opacity-10 hover:bg-opacity-10 animate-fade-in-up" style="animation-delay: 0.2s;">
-                    <div class="flex items-center justify-center w-12 h-12 mb-4 bg-purple-500 rounded-lg">
-                        <i class="text-xl text-white fas fa-shipping-fast"></i>
-                    </div>
-                    <h3 class="mb-2 text-lg font-semibold">Free Shipping</h3>
-                    <p class="text-sm text-gray-300">Free delivery on orders over $50</p>
-                </div>
-
-                <div class="p-6 transition-all duration-300 bg-white border border-white bg-opacity-5 backdrop-blur-sm rounded-xl border-opacity-10 hover:bg-opacity-10 animate-fade-in-up" style="animation-delay: 0.4s;">
-                    <div class="flex items-center justify-center w-12 h-12 mb-4 bg-green-500 rounded-lg">
-                        <i class="text-xl text-white fas fa-shield-alt"></i>
-                    </div>
-                    <h3 class="mb-2 text-lg font-semibold">2-Year Warranty</h3>
-                    <p class="text-sm text-gray-300">Comprehensive protection included</p>
-                </div>
-
-                <div class="p-6 transition-all duration-300 bg-white border border-white bg-opacity-5 backdrop-blur-sm rounded-xl border-opacity-10 hover:bg-opacity-10 animate-fade-in-up" style="animation-delay: 0.6s;">
-                    <div class="flex items-center justify-center w-12 h-12 mb-4 bg-blue-500 rounded-lg">
-                        <i class="text-xl text-white fas fa-headset"></i>
-                    </div>
-                    <h3 class="mb-2 text-lg font-semibold">24/7 Support</h3>
-                    <p class="text-sm text-gray-300">Expert help whenever you need it</p>
-                </div>
-            </div>
-
-            <!-- Scroll Indicator -->
-            <div class="absolute transform -translate-x-1/2 bottom-8 left-1/2 animate-bounce">
-                <a href="#categories" class="flex flex-col items-center text-gray-400 transition-colors duration-300 hover:text-white">
-                    <span class="mb-2 text-sm">Explore More</span>
-                    <div class="flex justify-center w-6 h-10 border-2 border-gray-400 rounded-full">
-                        <div class="w-1 h-3 mt-2 bg-gray-400 rounded-full"></div>
-                    </div>
+                    class="px-10 py-4 text-lg font-bold text-white transition-all duration-300 bg-gray-800 border border-gray-600 rounded-lg shadow-lg hover:bg-gray-700">
+                    <i class="mr-2 fas fa-star"></i>Best Sellers
                 </a>
             </div>
         </div>

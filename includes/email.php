@@ -149,7 +149,7 @@ if (!function_exists('sendUserConfirmation')) {
                         <ul>
                             <li>Our team will review your message</li>
                             <li>We'll respond within 24 hours during business days</li>
-                            <li>For urgent matters, call us at +250 (783) 818-521</li>
+                            <li>For urgent matters, call us at +250780088390</li>
                         </ul>
                     </div>
                     
@@ -159,7 +159,7 @@ if (!function_exists('sendUserConfirmation')) {
                 </div>
                 <div class='footer'>
                     <p>Best regards,<br><strong>The TechHaven Electronics Team</strong></p>
-                    <p>Email: info@techhaven.com | Phone: +250 (783) 818-521</p>
+                    <p>Email: info@techhaven.com | Phone: +250780088390</p>
                 </div>
             </div>
         </body>
