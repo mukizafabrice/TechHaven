@@ -133,17 +133,17 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
 <body class="bg-gray-100">
     <!-- Mobile Menu Button -->
-    <button id="mobileMenuButton" class="md:hidden fixed top-4 left-4 z-50 bg-blue-600 text-white p-3 rounded-lg shadow-lg">
+    <button id="mobileMenuButton" class="fixed z-50 p-3 text-white bg-blue-600 rounded-lg shadow-lg md:hidden top-4 left-4">
         <i class="fas fa-bars"></i>
     </button>
 
     <div class="flex h-screen">
         <!-- Sidebar -->
-        <aside id="adminSidebar" class="admin-sidebar bg-gray-800 text-white w-64 fixed h-full z-40">
+        <aside id="adminSidebar" class="fixed z-40 w-64 h-full text-white bg-gray-800 admin-sidebar">
             <!-- Logo -->
             <div class="p-6 border-b border-gray-700">
-                <h1 class="text-xl font-bold text-white">Wima Ntore Admin</h1>
-                <p class="text-sm text-gray-300 mt-1">Welcome, <?= htmlspecialchars($current_admin['full_name'] ?? 'Admin') ?></p>
+                <h1 class="text-xl font-bold text-white">Wima Store Admin</h1>
+                <p class="mt-1 text-sm text-gray-300">Welcome, <?= htmlspecialchars($current_admin['full_name'] ?? 'Admin') ?></p>
             </div>
 
             <!-- Navigation -->
@@ -152,7 +152,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <li>
                         <a href="<?= $admin_base_path ?>index.php"
                             class="sidebar-link flex items-center space-x-3 px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-700 transition duration-300 <?php echo $current_page == 'index.php' ? 'active bg-blue-600' : ''; ?>">
-                            <i class="fas fa-chart-line w-5"></i>
+                            <i class="w-5 fas fa-chart-line"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
@@ -161,7 +161,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <li>
                         <a href="<?= $admin_base_path ?>products/index.php"
                             class="sidebar-link flex items-center space-x-3 px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-700 transition duration-300 <?php echo str_contains($_SERVER['REQUEST_URI'], '/products/') ? 'active bg-blue-600' : ''; ?>">
-                            <i class="fas fa-box w-5"></i>
+                            <i class="w-5 fas fa-box"></i>
                             <span>Products</span>
                         </a>
                     </li>
@@ -170,7 +170,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <li>
                         <a href="<?= $admin_base_path ?>categories/index.php"
                             class="sidebar-link flex items-center space-x-3 px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-700 transition duration-300 <?php echo str_contains($_SERVER['REQUEST_URI'], '/categories/') ? 'active bg-blue-600' : ''; ?>">
-                            <i class="fas fa-tags w-5"></i>
+                            <i class="w-5 fas fa-tags"></i>
                             <span>Categories</span>
                         </a>
                     </li>
@@ -179,7 +179,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <li>
                         <a href="<?= $admin_base_path ?>messages/index.php"
                             class="sidebar-link flex items-center space-x-3 px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-700 transition duration-300 relative <?php echo str_contains($_SERVER['REQUEST_URI'], '/messages/') ? 'active bg-blue-600' : ''; ?>">
-                            <i class="fas fa-envelope w-5"></i>
+                            <i class="w-5 fas fa-envelope"></i>
                             <span>Messages</span>
                             <?php if ($unread_count > 0): ?>
                                 <span class="notification-badge"><?= $unread_count ?></span>
@@ -191,21 +191,21 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <li>
                         <a href="<?= $admin_base_path ?>profile/index.php"
                             class="sidebar-link flex items-center space-x-3 px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-700 transition duration-300 <?php echo str_contains($_SERVER['REQUEST_URI'], '/profile/') ? 'active bg-blue-600' : ''; ?>">
-                            <i class="fas fa-user-cog w-5"></i>
+                            <i class="w-5 fas fa-user-cog"></i>
                             <span>Profile Settings</span>
                         </a>
                     </li>
 
                     <!-- Divider -->
                     <li class="pt-4 border-t border-gray-700">
-                        <span class="text-xs uppercase text-gray-400 px-4 py-2 block">Account</span>
+                        <span class="block px-4 py-2 text-xs text-gray-400 uppercase">Account</span>
                     </li>
 
                     <!-- Logout -->
                     <li>
                         <a href="<?= $admin_base_path ?>logout.php"
-                            class="sidebar-link flex items-center space-x-3 px-4 py-3 text-gray-300 rounded-lg hover:bg-red-600 transition duration-300">
-                            <i class="fas fa-sign-out-alt w-5"></i>
+                            class="flex items-center px-4 py-3 space-x-3 text-gray-300 transition duration-300 rounded-lg sidebar-link hover:bg-red-600">
+                            <i class="w-5 fas fa-sign-out-alt"></i>
                             <span>Logout</span>
                         </a>
                     </li>
@@ -216,23 +216,23 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <!-- Main Content -->
         <main class="flex-1 md:ml-64">
             <!-- Top Bar -->
-            <header class="bg-white shadow-sm border-b">
+            <header class="bg-white border-b shadow-sm">
                 <div class="flex items-center justify-between p-4">
                     <!-- Left Section: Page Title -->
                     <div>
                         <h2 class="text-2xl font-semibold text-gray-800"><?= $page_title ?? 'Dashboard' ?></h2>
-                        <p class="text-gray-600 text-sm mt-1">Manage your e-commerce store</p>
+                        <p class="mt-1 text-sm text-gray-600">Manage your e-commerce store</p>
                     </div>
 
                     <!-- Right Section: Navigation and User Menu -->
                     <div class="flex items-center space-x-6">
                         <!-- Quick Stats -->
-                        <div class="hidden md:flex items-center space-x-4 text-sm text-gray-600">
+                        <div class="items-center hidden space-x-4 text-sm text-gray-600 md:flex">
                             <div class="text-center">
                                 <div class="font-semibold text-blue-600"><?= $unread_count ?></div>
                                 <div class="text-xs">New Messages</div>
                             </div>
-                            <div class="h-6 w-px bg-gray-300"></div>
+                            <div class="w-px h-6 bg-gray-300"></div>
                             <div class="text-center">
                                 <div class="font-semibold text-green-600"><?= date('H:i') ?></div>
                                 <div class="text-xs">Local Time</div>
@@ -243,11 +243,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <div class="flex items-center space-x-2">
                             <!-- Messages Button -->
                             <a href="<?= $admin_base_path ?>messages/index.php"
-                                class="relative bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition duration-300 flex items-center space-x-2">
+                                class="relative flex items-center px-4 py-2 space-x-2 text-gray-700 transition duration-300 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
                                 <i class="fas fa-envelope"></i>
                                 <span class="hidden sm:inline">Messages</span>
                                 <?php if ($unread_count > 0): ?>
-                                    <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                                    <span class="absolute flex items-center justify-center w-5 h-5 text-xs text-white bg-red-500 rounded-full -top-2 -right-2">
                                         <?= $unread_count ?>
                                     </span>
                                 <?php endif; ?>
@@ -255,7 +255,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
                             <!-- View Site Button -->
                             <a href="<?= $public_base_path ?>index.php" target="_blank"
-                                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 flex items-center space-x-2">
+                                class="flex items-center px-4 py-2 space-x-2 text-white transition duration-300 bg-blue-600 rounded-lg hover:bg-blue-700">
                                 <i class="fas fa-external-link-alt"></i>
                                 <span class="hidden sm:inline">View Site</span>
                             </a>
@@ -263,39 +263,39 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
                         <!-- User Profile Dropdown -->
                         <div class="relative" id="userDropdown">
-                            <button class="flex items-center space-x-3 bg-gray-100 hover:bg-gray-200 rounded-lg px-3 py-2 transition duration-300">
-                                <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
+                            <button class="flex items-center px-3 py-2 space-x-3 transition duration-300 bg-gray-100 rounded-lg hover:bg-gray-200">
+                                <div class="flex items-center justify-center w-8 h-8 font-semibold text-white bg-blue-600 rounded-full">
                                     <?= strtoupper(substr($current_admin['full_name'] ?? 'A', 0, 1)) ?>
                                 </div>
-                                <div class="hidden md:block text-left">
+                                <div class="hidden text-left md:block">
                                     <div class="text-sm font-medium text-gray-900"><?= htmlspecialchars($current_admin['full_name'] ?? 'Admin') ?></div>
                                     <div class="text-xs text-gray-500">Administrator</div>
                                 </div>
-                                <i class="fas fa-chevron-down text-gray-400 text-sm"></i>
+                                <i class="text-sm text-gray-400 fas fa-chevron-down"></i>
                             </button>
 
                             <!-- Dropdown Menu -->
-                            <div class="dropdown-menu absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
+                            <div class="absolute right-0 z-50 w-48 py-1 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg dropdown-menu">
                                 <a href="<?= $admin_base_path ?>profile/index.php"
-                                    class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 transition duration-300">
-                                    <i class="fas fa-user-cog w-4 text-gray-400"></i>
+                                    class="flex items-center px-4 py-3 space-x-3 text-gray-700 transition duration-300 hover:bg-gray-100">
+                                    <i class="w-4 text-gray-400 fas fa-user-cog"></i>
                                     <span>Profile Settings</span>
                                 </a>
                                 <a href="<?= $admin_base_path ?>profile/change-password.php"
-                                    class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 transition duration-300">
-                                    <i class="fas fa-key w-4 text-gray-400"></i>
+                                    class="flex items-center px-4 py-3 space-x-3 text-gray-700 transition duration-300 hover:bg-gray-100">
+                                    <i class="w-4 text-gray-400 fas fa-key"></i>
                                     <span>Change Password</span>
                                 </a>
-                                <div class="border-t border-gray-200 my-1"></div>
+                                <div class="my-1 border-t border-gray-200"></div>
                                 <a href="<?= $public_base_path ?>index.php" target="_blank"
-                                    class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 transition duration-300">
-                                    <i class="fas fa-store w-4 text-gray-400"></i>
+                                    class="flex items-center px-4 py-3 space-x-3 text-gray-700 transition duration-300 hover:bg-gray-100">
+                                    <i class="w-4 text-gray-400 fas fa-store"></i>
                                     <span>Visit Store</span>
                                 </a>
-                                <div class="border-t border-gray-200 my-1"></div>
+                                <div class="my-1 border-t border-gray-200"></div>
                                 <a href="<?= $admin_base_path ?>logout.php"
-                                    class="flex items-center space-x-3 px-4 py-3 text-red-600 hover:bg-red-50 transition duration-300">
-                                    <i class="fas fa-sign-out-alt w-4"></i>
+                                    class="flex items-center px-4 py-3 space-x-3 text-red-600 transition duration-300 hover:bg-red-50">
+                                    <i class="w-4 fas fa-sign-out-alt"></i>
                                     <span>Logout</span>
                                 </a>
                             </div>
@@ -304,30 +304,30 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 </div>
 
                 <!-- Secondary Navigation Bar -->
-                <div class="bg-gray-50 border-t border-gray-200 px-4 py-2">
+                <div class="px-4 py-2 border-t border-gray-200 bg-gray-50">
                     <div class="flex items-center justify-between">
                         <!-- Breadcrumb -->
                         <nav class="flex items-center space-x-2 text-sm text-gray-600">
-                            <a href="<?= $admin_base_path ?>index.php" class="hover:text-blue-600 transition duration-300">
+                            <a href="<?= $admin_base_path ?>index.php" class="transition duration-300 hover:text-blue-600">
                                 <i class="fas fa-home"></i>
                             </a>
                             <span class="text-gray-400">/</span>
                             <?php if (str_contains($_SERVER['REQUEST_URI'], '/products/')): ?>
-                                <a href="<?= $admin_base_path ?>products/index.php" class="hover:text-blue-600 transition duration-300">Products</a>
+                                <a href="<?= $admin_base_path ?>products/index.php" class="transition duration-300 hover:text-blue-600">Products</a>
                             <?php elseif (str_contains($_SERVER['REQUEST_URI'], '/categories/')): ?>
-                                <a href="<?= $admin_base_path ?>categories/index.php" class="hover:text-blue-600 transition duration-300">Categories</a>
+                                <a href="<?= $admin_base_path ?>categories/index.php" class="transition duration-300 hover:text-blue-600">Categories</a>
                             <?php elseif (str_contains($_SERVER['REQUEST_URI'], '/messages/')): ?>
-                                <a href="<?= $admin_base_path ?>messages/index.php" class="hover:text-blue-600 transition duration-300">Messages</a>
+                                <a href="<?= $admin_base_path ?>messages/index.php" class="transition duration-300 hover:text-blue-600">Messages</a>
                             <?php elseif (str_contains($_SERVER['REQUEST_URI'], '/profile/')): ?>
-                                <a href="<?= $admin_base_path ?>profile/index.php" class="hover:text-blue-600 transition duration-300">Profile</a>
+                                <a href="<?= $admin_base_path ?>profile/index.php" class="transition duration-300 hover:text-blue-600">Profile</a>
                             <?php else: ?>
-                                <span class="text-gray-800 font-medium">Dashboard</span>
+                                <span class="font-medium text-gray-800">Dashboard</span>
                             <?php endif; ?>
 
                             <!-- Current Page -->
                             <?php if ($current_page != 'index.php'): ?>
                                 <span class="text-gray-400">/</span>
-                                <span class="text-gray-800 font-medium"><?= $page_title ?? 'Page' ?></span>
+                                <span class="font-medium text-gray-800"><?= $page_title ?? 'Page' ?></span>
                             <?php endif; ?>
                         </nav>
 
@@ -335,15 +335,15 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <div class="flex items-center space-x-2">
                             <!-- Refresh Button -->
                             <button onclick="window.location.reload()"
-                                class="bg-white border border-gray-300 text-gray-700 px-3 py-1 rounded-lg hover:bg-gray-50 transition duration-300 flex items-center space-x-1 text-sm">
-                                <i class="fas fa-redo-alt text-xs"></i>
+                                class="flex items-center px-3 py-1 space-x-1 text-sm text-gray-700 transition duration-300 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
+                                <i class="text-xs fas fa-redo-alt"></i>
                                 <span>Refresh</span>
                             </button>
 
                             <!-- Help Button -->
                             <button
-                                class="bg-white border border-gray-300 text-gray-700 px-3 py-1 rounded-lg hover:bg-gray-50 transition duration-300 flex items-center space-x-1 text-sm">
-                                <i class="fas fa-question-circle text-xs"></i>
+                                class="flex items-center px-3 py-1 space-x-1 text-sm text-gray-700 transition duration-300 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
+                                <i class="text-xs fas fa-question-circle"></i>
                                 <span>Help</span>
                             </button>
                         </div>

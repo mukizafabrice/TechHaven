@@ -96,11 +96,11 @@ elseif (empty($featured_products) && !empty($all_products)) {
 
         @keyframes fadeIn {
             from {
-                opacity: 0;
+                opacity: 1;
             }
 
             to {
-                opacity: 1;
+                opacity: 2;
             }
         }
 
@@ -139,12 +139,12 @@ elseif (empty($featured_products) && !empty($all_products)) {
             }
 
             26% {
-                opacity: 0;
+                opacity: 1;
             }
 
             28% {
                 background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
-                opacity: 0;
+                opacity: 1;
             }
 
             30% {
@@ -173,12 +173,12 @@ elseif (empty($featured_products) && !empty($all_products)) {
             }
 
             86% {
-                opacity: 0;
+                opacity: 0.5;
             }
 
             88% {
                 background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
-                opacity: 0;
+                opacity: 0.5;
             }
 
             90% {
@@ -295,13 +295,13 @@ elseif (empty($featured_products) && !empty($all_products)) {
             <div class="mb-6 animate-fade-in-up">
                 <span class="inline-flex items-center px-6 py-2 text-sm font-semibold bg-white border border-white rounded-full bg-opacity-10 border-opacity-30 backdrop-blur-sm">
                     <i class="mr-2 fas fa-star"></i>
-                    Wima Ntore - Your Tech Destination
+                    Wima Store - Your Tech Destination
                 </span>
             </div>
 
             <!-- Main Heading -->
             <h1 class="mb-6 text-6xl font-black leading-tight md:text-7xl lg:text-8xl animate-slide-in-left">
-                WIMA NTORE
+                WIMA STORE
             </h1>
 
             <!-- Subheading -->
@@ -552,7 +552,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
                 Ready to Experience the Future?
             </h2>
             <p class="max-w-2xl mx-auto mb-12 text-xl text-purple-100 animate-on-scroll animate-fade-in-up" style="animation-delay: 0.1s;">
-                Join thousands of satisfied customers who trust TechHaven for their technology needs.
+                Join thousands of satisfied customers who trust Wima Store for their technology needs.
             </p>
             <div class="flex flex-col items-center justify-center gap-6 sm:flex-row animate-on-scroll animate-fade-in-up" style="animation-delay: 0.2s;">
                 <a href="products.php"

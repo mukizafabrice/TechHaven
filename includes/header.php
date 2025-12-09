@@ -154,7 +154,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <div class="p-2 rounded-lg" style="background: rgba(255, 255, 255, 0.15);">
                             <i class="text-2xl text-white fas fa-microchip"></i>
                         </div>
-                        <span class="logo-text">Wima Ntore</span>
+                        <span class="logo-text">Wima Store</span>
                     </a>
                 </div>
 

@@ -94,7 +94,7 @@ if (!function_exists('sendContactNotification')) {
                     <p><strong>IP Address:</strong> " . ($_SERVER['REMOTE_ADDR'] ?? 'Unknown') . "</p>
                 </div>
                 <div class='footer'>
-                    <p>This email was sent from the contact form on TechHaven Electronics</p>
+                    <p>This email was sent from the contact form on Wima Store Electronics</p>
                     <p>Please respond to this inquiry within 24 hours.</p>
                 </div>
             </div>

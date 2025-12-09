@@ -134,8 +134,8 @@ if ($_POST) {
                             <div>
                                 <h3 class="text-lg font-semibold text-gray-900">Email Address</h3>
                                 <p class="mt-1 text-gray-600">
-                                    info@techhaven.com<br>
-                                    support@techhaven.com
+                                    info@wimastore.com<br>
+                                    support@wimastore.com
                                 </p>
                             </div>
                         </div>
