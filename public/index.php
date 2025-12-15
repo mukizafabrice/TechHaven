@@ -7,7 +7,7 @@ if (!function_exists('calculateDiscountPercentage')) {
     function calculateDiscountPercentage($originalPrice, $discountPrice)
     {
         if (!$discountPrice || $discountPrice >= $originalPrice) return 0;
-        return round((($originalPrice - $discountPrice) / $originalPrice) * 100);
+        return round((($originalPrice - $discount_price) / $originalPrice) * 100);
     }
 }
 
@@ -16,9 +16,9 @@ if (!function_exists('formatPrice')) {
     {
         $price = floatval($price);
         if ($price <= 0) {
-            return 'RWF 0.00';
+            return 'RWF 0';
         }
-        return 'RWF ' . number_format($price, 2);
+        return 'RWF ' . number_format($price, 0, '.', ',');
     }
 }
 
@@ -138,46 +138,26 @@ elseif (empty($featured_products) && !empty($all_products)) {
                 opacity: 1;
             }
 
-            25% {
-                opacity: 1;
-            }
-
             30% {
-                opacity: 0;
+                opacity: 1;
             }
 
             31% {
                 background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
-                opacity: 0;
-            }
-
-            32% {
-                opacity: 1;
-            }
-
-            57% {
                 opacity: 1;
             }
 
             60% {
-                opacity: 0;
+                opacity: 1;
             }
 
             61% {
                 background-image: url('https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
-                opacity: 0;
+                opacity: 1;
             }
 
             62% {
                 opacity: 1;
-            }
-
-            85% {
-                opacity: 1;
-            }
-
-            88% {
-                opacity: 0;
             }
 
             89% {
@@ -241,6 +221,9 @@ elseif (empty($featured_products) && !empty($all_products)) {
 
         .product-card {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .product-card:hover {
@@ -407,6 +390,9 @@ elseif (empty($featured_products) && !empty($all_products)) {
             position: relative;
             overflow: hidden;
             background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            height: 280px;
+            min-height: 280px;
+            max-height: 280px;
         }
 
         .product-image {
@@ -463,11 +449,17 @@ elseif (empty($featured_products) && !empty($all_products)) {
             }
 
             .hero-title {
-                font-size: 2.5rem !important;
+                font-size: 2.25rem !important;
             }
 
             .hero-subtitle {
-                font-size: 1rem !important;
+                font-size: 0.95rem !important;
+            }
+
+            .image-container {
+                height: 220px;
+                min-height: 220px;
+                max-height: 220px;
             }
         }
     </style>
@@ -508,7 +500,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
     </div>
 
     <!-- Hero Section - Fixed Animation -->
-    <section class="relative flex items-center justify-center min-h-[90vh] overflow-hidden">
+    <section class="relative flex items-center justify-center min-h-[85vh] overflow-hidden">
         <!-- Hero Background with fixed animation -->
         <div class="absolute inset-0 z-0 hero-bg"></div>
         <div class="absolute inset-0 z-10 bg-black/30"></div>
@@ -516,80 +508,80 @@ elseif (empty($featured_products) && !empty($all_products)) {
         <!-- Content -->
         <div class="relative z-20 max-w-6xl px-4 mx-auto text-center text-white">
             <!-- Animated Badge -->
-            <div class="mb-8 animate-fade-in-up">
-                <span class="inline-flex items-center px-6 py-3 text-sm font-semibold tracking-wider text-white uppercase border rounded-full bg-white/10 backdrop-blur-sm border-white/20">
-                    <i class="mr-3 fas fa-crown"></i>
-                    Premium Electronics Destination
+            <div class="mb-6 animate-fade-in-up">
+                <span class="inline-flex items-center px-5 py-2 text-sm font-semibold tracking-wide text-white uppercase border bg-white/10 backdrop-blur-sm border-white/20 rounded-xl">
+                    <i class="mr-2 fas fa-crown"></i>
+                    Premium Electronics
                 </span>
             </div>
 
             <!-- Main Heading - Reduced Size -->
-            <h1 class="mb-6 text-5xl font-black leading-tight md:text-6xl lg:text-7xl hero-title animate-slide-in-left">
+            <h1 class="mb-4 text-4xl font-black leading-tight md:text-5xl lg:text-6xl hero-title animate-slide-in-left">
                 WIMA <span class="gradient-text">STORE</span>
             </h1>
 
             <!-- Subheading - Reduced Size -->
-            <p class="max-w-2xl mx-auto mb-12 text-lg font-light leading-relaxed md:text-xl hero-subtitle animate-fade-in">
+            <p class="max-w-2xl mx-auto mb-10 text-base font-light leading-relaxed md:text-lg hero-subtitle animate-fade-in">
                 Discover premium electronics at unbeatable prices. Experience quality, innovation, and exceptional service.
             </p>
 
             <!-- CTA Buttons -->
-            <div class="flex flex-col justify-center gap-4 sm:flex-row animate-fade-in-up">
+            <div class="flex flex-col justify-center gap-3 sm:flex-row animate-fade-in-up">
                 <a href="products.php"
-                    class="relative px-8 py-4 overflow-hidden text-lg font-bold text-white transition-all duration-300 shadow-2xl group bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl hover:shadow-3xl hover:scale-105">
+                    class="relative px-6 py-3 overflow-hidden text-base font-bold text-white transition-all duration-300 shadow-xl group bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg hover:shadow-2xl hover:scale-105">
                     <div class="relative z-10 flex items-center justify-center">
-                        <i class="mr-3 fas fa-shopping-cart"></i>Shop Now
+                        <i class="mr-2 fas fa-shopping-cart"></i>Shop Now
                     </div>
                     <div class="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-r from-purple-600 to-blue-600 group-hover:opacity-100"></div>
                 </a>
                 <a href="#featured"
-                    class="px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-transparent border-2 group border-white/40 rounded-xl hover:bg-white/10 hover:border-white/60">
+                    class="px-6 py-3 text-base font-bold text-white transition-all duration-300 bg-transparent border border-white/40 rounded-lg group hover:bg-white/10 hover:border-white/60">
                     <div class="flex items-center justify-center">
-                        <i class="mr-3 fas fa-star"></i>Featured Products
+                        <i class="mr-2 fas fa-star"></i>Featured Products
                     </div>
                 </a>
             </div>
         </div>
 
         <!-- Scroll Indicator -->
-        <div class="absolute transform -translate-x-1/2 bottom-8 left-1/2 animate-bounce">
+        <div class="absolute transform -translate-x-1/2 bottom-6 left-1/2 animate-bounce">
             <a href="#categories" class="transition-colors duration-300 text-white/70 hover:text-white">
-                <i class="text-2xl fas fa-chevron-down"></i>
+                <i class="text-xl fas fa-chevron-down"></i>
             </a>
         </div>
     </section>
 
     <!-- Categories Section -->
-    <section id="categories" class="py-20 bg-gradient-to-b from-gray-50 to-white">
+    <section id="categories" class="py-16 bg-gradient-to-b from-gray-50 to-white">
         <div class="container px-4 mx-auto">
-            <div class="mb-16 text-center animate-on-scroll">
-                <h2 class="mb-6 text-4xl font-black text-gray-900 md:text-5xl">
+            <div class="mb-12 text-center animate-on-scroll">
+                <h2 class="mb-4 text-3xl font-black text-gray-900 md:text-4xl">
                     Shop by <span class="gradient-text">Category</span>
                 </h2>
-                <p class="max-w-2xl mx-auto text-xl text-gray-600">
+                <p class="max-w-2xl mx-auto text-lg text-gray-600">
                     Explore our carefully curated categories featuring the latest in technology and innovation
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
                 <?php foreach ($categories as $index => $category): ?>
                     <div class="animate-on-scroll" style="animation-delay: <?= $index * 0.1 ?>s;">
                         <a href="products.php?category=<?= $category['slug'] ?>" class="block group">
-                            <div class="p-8 text-center transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-2xl hover:shadow-2xl group-hover:border-purple-200">
-                                <div class="flex items-center justify-center w-20 h-20 mx-auto mb-6 transition-transform duration-300 shadow-lg rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-600 group-hover:scale-110">
-                                    <i class="text-2xl text-white fas 
+                            <div class="p-6 text-center transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-xl hover:shadow-xl group-hover:border-purple-200">
+                                <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 transition-transform duration-300 shadow-lg rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 group-hover:scale-110">
+                                    <i class="text-xl text-white fas 
                                         <?= $category['name'] === 'Smartphones' ? 'fa-mobile-alt' : ($category['name'] === 'Laptops & PCs' ? 'fa-laptop' : ($category['name'] === 'Cameras' ? 'fa-camera' : 'fa-headphones')) ?>">
                                     </i>
                                 </div>
-                                <h3 class="mb-3 text-xl font-bold text-gray-900 transition-colors duration-300 group-hover:text-purple-600">
+                                <h3 class="mb-2 text-lg font-bold text-gray-900 transition-colors duration-300 group-hover:text-purple-600">
                                     <?= htmlspecialchars($category['name']) ?>
                                 </h3>
                                 <p class="text-sm leading-relaxed text-gray-600">
                                     Discover the latest innovations in <?= htmlspecialchars(strtolower($category['name'])) ?> technology
                                 </p>
-                                <div class="flex items-center justify-center mt-4 font-semibold text-purple-600 transition-opacity duration-300 opacity-0 group-hover:opacity-100">
+                                <div class="flex items-center justify-center mt-3 text-sm font-semibold text-purple-600 transition-opacity duration-300 opacity-0 group-hover:opacity-100">
                                     <span>Explore</span>
-                                    <i class="ml-2 transition-transform duration-300 transform fas fa-arrow-right group-hover:translate-x-1"></i>
+                                    <i class="ml-1 transition-transform duration-300 transform fas fa-arrow-right group-hover:translate-x-1"></i>
                                 </div>
                             </div>
                         </a>
@@ -600,20 +592,20 @@ elseif (empty($featured_products) && !empty($all_products)) {
     </section>
 
     <!-- Featured Products -->
-    <section id="featured" class="py-20 bg-gradient-to-br from-gray-900 to-purple-900">
+    <section id="featured" class="py-16 bg-gradient-to-br from-gray-900 to-purple-900">
         <div class="container px-4 mx-auto">
-            <div class="mb-16 text-center animate-on-scroll">
-                <h2 class="mb-6 text-4xl font-black text-white md:text-5xl">
+            <div class="mb-12 text-center animate-on-scroll">
+                <h2 class="mb-4 text-3xl font-black text-white md:text-4xl">
                     <span class="text-white">Featured</span>
                     <span class="gradient-text">Products</span>
                 </h2>
-                <p class="max-w-2xl mx-auto text-xl text-gray-300">
+                <p class="max-w-2xl mx-auto text-lg text-gray-300">
                     Handpicked selection of our most innovative and popular products
                 </p>
             </div>
 
             <?php if (!empty($featured_products)): ?>
-                <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
                     <?php foreach ($featured_products as $index => $product):
                         // Safe data access with null coalescing
                         $product_id = $product['id'] ?? 0;
@@ -625,7 +617,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
                         $category_name = $product['category_name'] ?? 'Uncategorized';
                         $short_description = $product['short_description'] ?? $product['description'] ?? 'No description available';
                         $is_featured = $product['is_featured'] ?? false;
-                        
+
                         $discount_percentage = calculateDiscountPercentage($product_price, $discount_price);
 
                         // Improved image path checking with better fallback
@@ -653,52 +645,52 @@ elseif (empty($featured_products) && !empty($all_products)) {
                         }
                     ?>
                         <div class="animate-on-scroll" style="animation-delay: <?= $index * 0.1 ?>s;">
-                            <div class="overflow-hidden bg-white border border-gray-100 shadow-lg group product-card rounded-2xl hover:shadow-2xl">
-                                <!-- Professional Image Container -->
-                                <div class="relative aspect-square image-container">
+                            <div class="overflow-hidden bg-white border border-gray-100 shadow-lg group product-card rounded-xl hover:shadow-xl">
+                                <!-- Professional Image Container with fixed height -->
+                                <div class="relative image-container">
                                     <img src="<?= $image_src ?>"
                                         alt="<?= htmlspecialchars($product_name) ?>"
                                         class="product-image"
                                         onerror="this.src='https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'">
 
                                     <?php if ($discount_percentage > 0): ?>
-                                        <span class="absolute top-4 left-4 px-3 py-1.5 text-sm font-bold text-white rounded-full shadow-lg bg-gradient-to-r from-red-500 to-pink-500">
-                                            -<?= $discount_percentage ?>% OFF
+                                        <span class="absolute top-3 left-3 px-2 py-1 text-xs font-bold text-white rounded-full shadow-lg bg-gradient-to-r from-red-500 to-pink-500">
+                                            -<?= $discount_percentage ?>%
                                         </span>
                                     <?php endif; ?>
 
                                     <?php if ($stock_quantity == 0): ?>
-                                        <span class="absolute top-4 right-4 px-3 py-1.5 text-sm font-bold text-white bg-gradient-to-r from-gray-600 to-gray-700 rounded-full shadow-lg">
+                                        <span class="absolute top-3 right-3 px-2 py-1 text-xs font-bold text-white bg-gradient-to-r from-gray-600 to-gray-700 rounded-full shadow-lg">
                                             Out of Stock
                                         </span>
                                     <?php endif; ?>
                                 </div>
 
-                                <div class="p-6">
-                                    <div class="flex items-center justify-between mb-3">
-                                        <span class="px-3 py-1 text-xs font-semibold text-purple-600 rounded-full bg-purple-50">
+                                <div class="flex flex-col flex-1 p-5">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="px-2 py-1 text-xs font-semibold text-purple-600 rounded-full bg-purple-50">
                                             <?= htmlspecialchars($category_name) ?>
                                         </span>
                                         <?php if ($is_featured): ?>
-                                            <i class="text-yellow-400 fas fa-star" title="Featured Product"></i>
+                                            <i class="text-yellow-400 text-sm fas fa-star" title="Featured Product"></i>
                                         <?php endif; ?>
                                     </div>
 
-                                    <h3 class="mb-2 text-lg font-bold leading-tight text-gray-900 transition-colors duration-300 line-clamp-2 group-hover:text-purple-600">
+                                    <h3 class="mb-2 text-base font-bold leading-tight text-gray-900 transition-colors duration-300 line-clamp-2 group-hover:text-purple-600 flex-grow">
                                         <?= htmlspecialchars($product_name) ?>
                                     </h3>
 
-                                    <p class="mb-4 text-sm leading-relaxed text-gray-600 line-clamp-2">
+                                    <p class="mb-3 text-sm text-gray-600 line-clamp-2">
                                         <?= htmlspecialchars($short_description) ?>
                                     </p>
 
                                     <div class="flex items-center justify-between mb-4">
                                         <div class="flex items-center space-x-2">
                                             <?php if ($discount_price && $discount_price > 0): ?>
-                                                <span class="text-xl font-black text-gray-900"><?= formatPrice($discount_price) ?></span>
+                                                <span class="text-lg font-black text-gray-900"><?= formatPrice($discount_price) ?></span>
                                                 <span class="text-sm text-gray-500 line-through"><?= formatPrice($product_price) ?></span>
                                             <?php else: ?>
-                                                <span class="text-xl font-black text-gray-900"><?= formatPrice($product_price) ?></span>
+                                                <span class="text-lg font-black text-gray-900"><?= formatPrice($product_price) ?></span>
                                             <?php endif; ?>
                                         </div>
                                         <span class="text-xs font-semibold px-2 py-1 rounded-full 
@@ -708,8 +700,8 @@ elseif (empty($featured_products) && !empty($all_products)) {
                                     </div>
 
                                     <a href="product-detail.php?slug=<?= $product_slug ?>"
-                                        class="block w-full py-3 font-semibold text-center text-white transition-all duration-300 transform shadow-lg bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl hover:from-purple-700 hover:to-indigo-700 hover:shadow-xl hover:scale-105">
-                                        <i class="mr-2 fas fa-eye"></i>View Details
+                                        class="block w-full py-2.5 text-sm font-semibold text-center text-white transition-all duration-300 shadow-md bg-gradient-to-r from-purple-600 to-indigo-600 rounded-lg hover:from-purple-700 hover:to-indigo-700 hover:shadow-lg hover:scale-105 mt-auto">
+                                        <i class="mr-1.5 fas fa-eye"></i>View Details
                                     </a>
                                 </div>
                             </div>
@@ -717,27 +709,27 @@ elseif (empty($featured_products) && !empty($all_products)) {
                     <?php endforeach; ?>
                 </div>
 
-                <div class="mt-12 text-center animate-on-scroll">
+                <div class="mt-10 text-center animate-on-scroll">
                     <a href="products.php"
-                        class="inline-flex items-center px-8 py-4 text-lg font-bold text-purple-600 transition-all duration-300 bg-white border border-purple-200 shadow-lg rounded-xl hover:bg-gray-50 hover:shadow-xl group">
+                        class="inline-flex items-center px-6 py-3 text-base font-bold text-purple-600 transition-all duration-300 bg-white border border-purple-200 shadow-lg rounded-lg hover:bg-gray-50 hover:shadow-xl group">
                         <span>View All Products</span>
-                        <i class="ml-3 transition-transform duration-300 transform fas fa-arrow-right group-hover:translate-x-1"></i>
+                        <i class="ml-2 transition-transform duration-300 transform fas fa-arrow-right group-hover:translate-x-1"></i>
                     </a>
                 </div>
             <?php else: ?>
                 <div class="animate-on-scroll">
-                    <div class="py-20 text-center border bg-white/10 backdrop-blur-sm rounded-2xl border-white/20">
-                        <div class="relative inline-block mb-6">
+                    <div class="py-16 text-center border bg-white/10 backdrop-blur-sm rounded-xl border-white/20">
+                        <div class="relative inline-block mb-4">
                             <div class="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 blur-xl opacity-20"></div>
-                            <i class="relative text-6xl text-gray-300 fas fa-box-open"></i>
+                            <i class="relative text-5xl text-gray-300 fas fa-box-open"></i>
                         </div>
-                        <h3 class="mb-4 text-2xl font-bold text-white">Featured Products Coming Soon</h3>
-                        <p class="max-w-md mx-auto mb-8 text-lg text-gray-300">We're preparing something amazing for you!</p>
-                        <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
-                            <a href="products.php" class="px-8 py-3 font-semibold text-purple-600 transition duration-300 bg-white rounded-xl hover:bg-gray-100">
+                        <h3 class="mb-3 text-xl font-bold text-white">Featured Products Coming Soon</h3>
+                        <p class="max-w-md mx-auto mb-6 text-gray-300">We're preparing something amazing for you!</p>
+                        <div class="flex flex-col items-center justify-center gap-3 sm:flex-row">
+                            <a href="products.php" class="px-6 py-2.5 text-sm font-semibold text-purple-600 transition duration-300 bg-white rounded-lg hover:bg-gray-100">
                                 Browse All Products
                             </a>
-                            <a href="contact.php" class="px-8 py-3 font-semibold text-white transition duration-300 border border-white rounded-xl hover:bg-white/10">
+                            <a href="contact.php" class="px-6 py-2.5 text-sm font-semibold text-white transition duration-300 border border-white rounded-lg hover:bg-white/10">
                                 Contact Us
                             </a>
                         </div>
@@ -748,49 +740,49 @@ elseif (empty($featured_products) && !empty($all_products)) {
     </section>
 
     <!-- Why Choose Us -->
-    <section class="py-20 bg-gradient-to-b from-white to-gray-50">
+    <section class="py-16 bg-gradient-to-b from-white to-gray-50">
         <div class="container px-4 mx-auto">
-            <div class="mb-16 text-center animate-on-scroll">
-                <h2 class="mb-6 text-4xl font-black text-gray-900 md:text-5xl">
+            <div class="mb-12 text-center animate-on-scroll">
+                <h2 class="mb-4 text-3xl font-black text-gray-900 md:text-4xl">
                     Why Choose <span class="gradient-text">Wima Store</span>?
                 </h2>
-                <p class="max-w-2xl mx-auto text-xl text-gray-600">
+                <p class="max-w-2xl mx-auto text-lg text-gray-600">
                     Experience the difference with our commitment to quality, service, and innovation
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
                 <div class="animate-on-scroll" style="animation-delay: 0.1s;">
-                    <div class="p-8 text-center transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-2xl hover:shadow-xl hover:border-purple-200">
-                        <div class="flex items-center justify-center w-20 h-20 mx-auto mb-6 shadow-lg rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600">
-                            <i class="text-2xl text-white fas fa-shipping-fast"></i>
+                    <div class="p-6 text-center transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-xl hover:shadow-xl hover:border-purple-200">
+                        <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 shadow-lg rounded-xl bg-gradient-to-br from-green-500 to-emerald-600">
+                            <i class="text-xl text-white fas fa-shipping-fast"></i>
                         </div>
-                        <h3 class="mb-4 text-2xl font-black text-gray-900">Free Shipping</h3>
-                        <p class="text-lg leading-relaxed text-gray-600">
-                            Free express shipping on all orders over RWF 50. Fast delivery to your doorstep.
+                        <h3 class="mb-3 text-xl font-black text-gray-900">Free Shipping</h3>
+                        <p class="text-base leading-relaxed text-gray-600">
+                            Free express shipping on all orders over RWF 50,000. Fast delivery to your doorstep.
                         </p>
                     </div>
                 </div>
 
                 <div class="animate-on-scroll" style="animation-delay: 0.2s;">
-                    <div class="p-8 text-center transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-2xl hover:shadow-xl hover:border-blue-200">
-                        <div class="flex items-center justify-center w-20 h-20 mx-auto mb-6 shadow-lg rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600">
-                            <i class="text-2xl text-white fas fa-shield-alt"></i>
+                    <div class="p-6 text-center transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-xl hover:shadow-xl hover:border-blue-200">
+                        <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 shadow-lg rounded-xl bg-gradient-to-br from-blue-500 to-cyan-600">
+                            <i class="text-xl text-white fas fa-shield-alt"></i>
                         </div>
-                        <h3 class="mb-4 text-2xl font-black text-gray-900">Quality Guarantee</h3>
-                        <p class="text-lg leading-relaxed text-gray-600">
+                        <h3 class="mb-3 text-xl font-black text-gray-900">Quality Guarantee</h3>
+                        <p class="text-base leading-relaxed text-gray-600">
                             30-day money back guarantee and 2-year warranty on all our premium products.
                         </p>
                     </div>
                 </div>
 
                 <div class="animate-on-scroll" style="animation-delay: 0.3s;">
-                    <div class="p-8 text-center transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-2xl hover:shadow-xl hover:border-purple-200">
-                        <div class="flex items-center justify-center w-20 h-20 mx-auto mb-6 shadow-lg rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600">
-                            <i class="text-2xl text-white fas fa-headset"></i>
+                    <div class="p-6 text-center transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-xl hover:shadow-xl hover:border-purple-200">
+                        <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 shadow-lg rounded-xl bg-gradient-to-br from-purple-500 to-pink-600">
+                            <i class="text-xl text-white fas fa-headset"></i>
                         </div>
-                        <h3 class="mb-4 text-2xl font-black text-gray-900">24/7 Support</h3>
-                        <p class="text-lg leading-relaxed text-gray-600">
+                        <h3 class="mb-3 text-xl font-black text-gray-900">24/7 Support</h3>
+                        <p class="text-base leading-relaxed text-gray-600">
                             Round-the-clock customer support with expert technicians ready to assist you.
                         </p>
                     </div>
@@ -800,30 +792,30 @@ elseif (empty($featured_products) && !empty($all_products)) {
     </section>
 
     <!-- Final CTA -->
-    <section class="py-20 bg-gradient-to-r from-purple-600 to-indigo-700">
+    <section class="py-16 bg-gradient-to-r from-purple-600 to-indigo-700">
         <div class="container px-4 mx-auto text-center">
             <div class="animate-on-scroll">
-                <h2 class="mb-6 text-4xl font-black text-white md:text-5xl">
+                <h2 class="mb-4 text-3xl font-black text-white md:text-4xl">
                     Ready to Experience the Future?
                 </h2>
             </div>
             <div class="animate-on-scroll" style="animation-delay: 0.1s;">
-                <p class="max-w-2xl mx-auto mb-12 text-xl text-purple-100">
+                <p class="max-w-2xl mx-auto mb-8 text-lg text-purple-100">
                     Join thousands of satisfied customers who trust Wima Store for their technology needs.
                 </p>
             </div>
             <div class="animate-on-scroll" style="animation-delay: 0.2s;">
-                <div class="flex flex-col items-center justify-center gap-6 sm:flex-row">
+                <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
                     <a href="products.php"
-                        class="relative px-12 py-5 overflow-hidden text-xl font-bold text-purple-600 transition-all duration-300 bg-white shadow-2xl group rounded-2xl hover:shadow-3xl hover:scale-105">
+                        class="relative px-8 py-3 overflow-hidden text-lg font-bold text-purple-600 transition-all duration-300 bg-white shadow-xl group rounded-xl hover:shadow-2xl hover:scale-105">
                         <div class="relative z-10 flex items-center">
-                            <i class="mr-4 fas fa-shopping-cart"></i>Start Shopping Now
+                            <i class="mr-3 fas fa-shopping-cart"></i>Start Shopping Now
                         </div>
                         <div class="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-r from-purple-50 to-blue-50 group-hover:opacity-100"></div>
                     </a>
                     <a href="contact.php"
-                        class="px-12 py-5 text-xl font-bold text-white transition-all duration-300 border-2 border-white rounded-2xl hover:bg-white/10 backdrop-blur-sm">
-                        <i class="mr-4 fas fa-envelope"></i>Contact Us
+                        class="px-8 py-3 text-lg font-bold text-white transition-all duration-300 border-2 border-white rounded-xl hover:bg-white/10 backdrop-blur-sm">
+                        <i class="mr-3 fas fa-envelope"></i>Contact Us
                     </a>
                 </div>
             </div>
