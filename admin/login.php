@@ -74,45 +74,45 @@ if ($_POST) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="max-w-md w-full bg-white rounded-lg shadow-md p-8">
-        <div class="text-center mb-8">
-            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-lock text-white text-2xl"></i>
+<body class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
+        <div class="mb-8 text-center">
+            <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-blue-500 rounded-full">
+                <i class="text-2xl text-white fas fa-lock"></i>
             </div>
             <h2 class="text-2xl font-bold text-gray-800">Admin Login</h2>
-            <p class="text-gray-600 mt-2">Access the TechHaven admin panel</p>
+            <p class="mt-2 text-gray-600">Access the Wima Store admin panel</p>
         </div>
 
         <?php if ($error): ?>
-            <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center">
-                <i class="fas fa-exclamation-circle mr-2"></i>
+            <div class="flex items-center px-4 py-3 mb-6 text-red-700 border border-red-200 rounded-lg bg-red-50">
+                <i class="mr-2 fas fa-exclamation-circle"></i>
                 <?= $error ?>
             </div>
         <?php endif; ?>
 
         <form method="POST" class="space-y-6">
             <div>
-                <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                <label for="username" class="block mb-2 text-sm font-medium text-gray-700">Username</label>
                 <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-user text-gray-400"></i>
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <i class="text-gray-400 fas fa-user"></i>
                     </div>
                     <input type="text" id="username" name="username" required
-                        class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        class="block w-full py-3 pl-10 pr-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         placeholder="Enter your username"
                         value="<?= htmlspecialchars($_POST['username'] ?? '') ?>">
                 </div>
             </div>
 
             <div>
-                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                <label for="password" class="block mb-2 text-sm font-medium text-gray-700">Password</label>
                 <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-lock text-gray-400"></i>
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <i class="text-gray-400 fas fa-lock"></i>
                     </div>
                     <input type="password" id="password" name="password" required
-                        class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        class="block w-full py-3 pl-10 pr-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         placeholder="Enter your password">
                 </div>
             </div>
@@ -120,26 +120,26 @@ if ($_POST) {
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
                     <input id="remember_me" name="remember_me" type="checkbox"
-                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
-                    <label for="remember_me" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                        class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                    <label for="remember_me" class="block ml-2 text-sm text-gray-700">Remember me</label>
                 </div>
             </div>
 
             <button type="submit"
-                class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 font-semibold">
+                class="w-full px-4 py-3 font-semibold text-white transition duration-200 bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                 Sign In
             </button>
         </form>
 
         <div class="mt-6 text-center">
-            <a href="../index.php" class="text-blue-600 hover:text-blue-500 text-sm">
-                <i class="fas fa-arrow-left mr-1"></i> Back to Main Site
+            <a href="../index.php" class="text-sm text-blue-600 hover:text-blue-500">
+                <i class="mr-1 fas fa-arrow-left"></i> Back to Main Site
             </a>
         </div>
 
         <!-- Temporary debug link - remove in production -->
         <div class="mt-4 text-center">
-            <a href="reset-password.php" class="text-red-600 hover:text-red-500 text-sm">
+            <a href="reset-password.php" class="text-sm text-red-600 hover:text-red-500">
                 Reset Password (Debug)
             </a>
         </div>

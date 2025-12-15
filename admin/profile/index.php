@@ -1,6 +1,24 @@
 <?php
-$page_title = "Profile Settings";
-include '../../includes/admin-header.php';
+// Include necessary files for POST handling
+require_once '../../includes/config.php';
+require_once '../../includes/functions.php';
+
+// Start session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Check if admin is logged in
+if (!isset($_SESSION['admin_id'])) {
+    header('Location: ../login.php');
+    exit;
+}
+
+$current_admin = getCurrentAdmin($pdo);
+if (!$current_admin) {
+    header('Location: ../login.php');
+    exit;
+}
 
 // Handle profile updates
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
@@ -20,6 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     }
 }
 
+$page_title = "Profile Settings";
+include '../../includes/admin-header.php';
+
 // Display success message from session
 if (isset($_SESSION['success_message'])) {
     $success_message = $_SESSION['success_message'];
@@ -27,36 +48,36 @@ if (isset($_SESSION['success_message'])) {
 }
 ?>
 
-<div class="container mx-auto px-4 py-6">
+<div class="container px-4 py-6 mx-auto">
     <div class="max-w-4xl mx-auto">
         <!-- Header -->
         <div class="mb-8">
             <h1 class="text-3xl font-bold text-gray-800">Profile Settings</h1>
-            <p class="text-gray-600 mt-2">Manage your account information and preferences</p>
+            <p class="mt-2 text-gray-600">Manage your account information and preferences</p>
         </div>
 
         <!-- Notifications -->
         <?php if (isset($success_message)): ?>
-            <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 flex items-center">
-                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+            <div class="flex items-center px-4 py-3 mb-6 text-green-700 border border-green-200 rounded-lg bg-green-50">
+                <i class="mr-3 text-green-500 fas fa-check-circle"></i>
                 <span><?= $success_message ?></span>
             </div>
         <?php endif; ?>
 
         <?php if (isset($error_message)): ?>
-            <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center">
-                <i class="fas fa-exclamation-circle text-red-500 mr-3"></i>
+            <div class="flex items-center px-4 py-3 mb-6 text-red-700 border border-red-200 rounded-lg bg-red-50">
+                <i class="mr-3 text-red-500 fas fa-exclamation-circle"></i>
                 <span><?= $error_message ?></span>
             </div>
         <?php endif; ?>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
             <!-- Left Column - Profile Information -->
             <div class="lg:col-span-2">
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="bg-white border border-gray-200 shadow-sm rounded-xl">
                     <div class="px-6 py-5 border-b border-gray-200">
                         <h2 class="text-lg font-semibold text-gray-800">Personal Information</h2>
-                        <p class="text-sm text-gray-600 mt-1">Update your basic profile information</p>
+                        <p class="mt-1 text-sm text-gray-600">Update your basic profile information</p>
                     </div>
 
                     <div class="p-6">
@@ -64,39 +85,39 @@ if (isset($_SESSION['success_message'])) {
                             <div class="space-y-6">
                                 <!-- Full Name -->
                                 <div>
-                                    <label for="full_name" class="block text-sm font-medium text-gray-700 mb-2">
+                                    <label for="full_name" class="block mb-2 text-sm font-medium text-gray-700">
                                         Full Name <span class="text-red-500">*</span>
                                     </label>
                                     <input type="text" id="full_name" name="full_name"
                                         value="<?= htmlspecialchars($current_admin['full_name']) ?>"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
+                                        class="w-full px-4 py-3 transition duration-300 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                         required
                                         placeholder="Enter your full name">
                                 </div>
 
                                 <!-- Email -->
                                 <div>
-                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                                    <label for="email" class="block mb-2 text-sm font-medium text-gray-700">
                                         Email Address <span class="text-red-500">*</span>
                                     </label>
                                     <input type="email" id="email" name="email"
                                         value="<?= htmlspecialchars($current_admin['email']) ?>"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
+                                        class="w-full px-4 py-3 transition duration-300 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                         required
                                         placeholder="Enter your email address">
                                 </div>
 
                                 <!-- Username (Read-only) -->
                                 <div>
-                                    <label for="username" class="block text-sm font-medium text-gray-700 mb-2">
+                                    <label for="username" class="block mb-2 text-sm font-medium text-gray-700">
                                         Username
                                     </label>
                                     <input type="text" id="username"
                                         value="<?= htmlspecialchars($current_admin['username']) ?>"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 cursor-not-allowed"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg cursor-not-allowed bg-gray-50"
                                         disabled>
-                                    <p class="text-sm text-gray-500 mt-2">
-                                        <i class="fas fa-info-circle mr-1"></i>
+                                    <p class="mt-2 text-sm text-gray-500">
+                                        <i class="mr-1 fas fa-info-circle"></i>
                                         Username cannot be changed for security reasons.
                                     </p>
                                 </div>
@@ -104,8 +125,8 @@ if (isset($_SESSION['success_message'])) {
                                 <!-- Submit Button -->
                                 <div class="flex justify-end pt-4">
                                     <button type="submit" name="update_profile"
-                                        class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-300 font-medium flex items-center">
-                                        <i class="fas fa-save mr-2"></i>
+                                        class="flex items-center px-8 py-3 font-medium text-white transition duration-300 bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                        <i class="mr-2 fas fa-save"></i>
                                         Update Profile
                                     </button>
                                 </div>
@@ -115,33 +136,33 @@ if (isset($_SESSION['success_message'])) {
                 </div>
 
                 <!-- Account Information -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 mt-6">
+                <div class="mt-6 bg-white border border-gray-200 shadow-sm rounded-xl">
                     <div class="px-6 py-5 border-b border-gray-200">
                         <h2 class="text-lg font-semibold text-gray-800">Account Information</h2>
-                        <p class="text-sm text-gray-600 mt-1">Your account details and activity</p>
+                        <p class="mt-1 text-sm text-gray-600">Your account details and activity</p>
                     </div>
 
                     <div class="p-6">
                         <dl class="space-y-4">
-                            <div class="flex justify-between items-center py-3 border-b border-gray-100">
-                                <dt class="text-sm font-medium text-gray-500 flex items-center">
-                                    <i class="fas fa-user-shield mr-2"></i>
+                            <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                                <dt class="flex items-center text-sm font-medium text-gray-500">
+                                    <i class="mr-2 fas fa-user-shield"></i>
                                     Admin ID
                                 </dt>
-                                <dd class="text-sm text-gray-900 font-mono">#<?= $current_admin['id'] ?></dd>
+                                <dd class="font-mono text-sm text-gray-900">#<?= $current_admin['id'] ?></dd>
                             </div>
 
-                            <div class="flex justify-between items-center py-3 border-b border-gray-100">
-                                <dt class="text-sm font-medium text-gray-500 flex items-center">
-                                    <i class="fas fa-calendar-plus mr-2"></i>
+                            <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                                <dt class="flex items-center text-sm font-medium text-gray-500">
+                                    <i class="mr-2 fas fa-calendar-plus"></i>
                                     Member since
                                 </dt>
                                 <dd class="text-sm text-gray-900"><?= date('F j, Y', strtotime($current_admin['created_at'])) ?></dd>
                             </div>
 
-                            <div class="flex justify-between items-center py-3 border-b border-gray-100">
-                                <dt class="text-sm font-medium text-gray-500 flex items-center">
-                                    <i class="fas fa-clock mr-2"></i>
+                            <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                                <dt class="flex items-center text-sm font-medium text-gray-500">
+                                    <i class="mr-2 fas fa-clock"></i>
                                     Last login
                                 </dt>
                                 <dd class="text-sm text-gray-900">
@@ -151,14 +172,14 @@ if (isset($_SESSION['success_message'])) {
                                 </dd>
                             </div>
 
-                            <div class="flex justify-between items-center py-3">
-                                <dt class="text-sm font-medium text-gray-500 flex items-center">
-                                    <i class="fas fa-circle mr-2"></i>
+                            <div class="flex items-center justify-between py-3">
+                                <dt class="flex items-center text-sm font-medium text-gray-500">
+                                    <i class="mr-2 fas fa-circle"></i>
                                     Account status
                                 </dt>
                                 <dd class="text-sm">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                        <i class="fas fa-check mr-1"></i>
+                                        <i class="mr-1 fas fa-check"></i>
                                         Active
                                     </span>
                                 </dd>
@@ -171,61 +192,61 @@ if (isset($_SESSION['success_message'])) {
             <!-- Right Column - Quick Actions -->
             <div class="lg:col-span-1">
                 <!-- Profile Card -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 text-center mb-6">
-                    <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                <div class="p-6 mb-6 text-center bg-white border border-gray-200 shadow-sm rounded-xl">
+                    <div class="flex items-center justify-center w-20 h-20 mx-auto mb-4 text-2xl font-bold text-white rounded-full bg-gradient-to-br from-blue-500 to-purple-600">
                         <?= strtoupper(substr($current_admin['full_name'], 0, 1)) ?>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-800"><?= htmlspecialchars($current_admin['full_name']) ?></h3>
-                    <p class="text-gray-600 text-sm mt-1">Administrator</p>
-                    <p class="text-gray-500 text-xs mt-2"><?= htmlspecialchars($current_admin['email']) ?></p>
+                    <p class="mt-1 text-sm text-gray-600">Administrator</p>
+                    <p class="mt-2 text-xs text-gray-500"><?= htmlspecialchars($current_admin['email']) ?></p>
                 </div>
 
                 <!-- Quick Actions -->
                 <div class="space-y-4">
                     <a href="change-password.php"
-                        class="flex items-center p-4 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-blue-300 transition duration-300 group">
-                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition duration-300">
-                            <i class="fas fa-key text-blue-600 text-lg"></i>
+                        class="flex items-center p-4 transition duration-300 bg-white border border-gray-200 shadow-sm rounded-xl hover:shadow-md hover:border-blue-300 group">
+                        <div class="flex items-center justify-center w-12 h-12 transition duration-300 bg-blue-100 rounded-lg group-hover:bg-blue-200">
+                            <i class="text-lg text-blue-600 fas fa-key"></i>
                         </div>
                         <div class="ml-4 text-left">
                             <h3 class="font-semibold text-gray-900">Change Password</h3>
-                            <p class="text-sm text-gray-500 mt-1">Update your account password</p>
+                            <p class="mt-1 text-sm text-gray-500">Update your account password</p>
                         </div>
-                        <i class="fas fa-chevron-right text-gray-400 ml-auto group-hover:text-blue-600 transition duration-300"></i>
+                        <i class="ml-auto text-gray-400 transition duration-300 fas fa-chevron-right group-hover:text-blue-600"></i>
                     </a>
 
                     <a href="../messages/index.php"
-                        class="flex items-center p-4 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-green-300 transition duration-300 group">
-                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition duration-300">
-                            <i class="fas fa-envelope text-green-600 text-lg"></i>
+                        class="flex items-center p-4 transition duration-300 bg-white border border-gray-200 shadow-sm rounded-xl hover:shadow-md hover:border-green-300 group">
+                        <div class="flex items-center justify-center w-12 h-12 transition duration-300 bg-green-100 rounded-lg group-hover:bg-green-200">
+                            <i class="text-lg text-green-600 fas fa-envelope"></i>
                         </div>
                         <div class="ml-4 text-left">
                             <h3 class="font-semibold text-gray-900">View Messages</h3>
-                            <p class="text-sm text-gray-500 mt-1">Check customer inquiries</p>
+                            <p class="mt-1 text-sm text-gray-500">Check customer inquiries</p>
                         </div>
-                        <i class="fas fa-chevron-right text-gray-400 ml-auto group-hover:text-green-600 transition duration-300"></i>
+                        <i class="ml-auto text-gray-400 transition duration-300 fas fa-chevron-right group-hover:text-green-600"></i>
                     </a>
 
                     <a href="../index.php"
-                        class="flex items-center p-4 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-purple-300 transition duration-300 group">
-                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center group-hover:bg-purple-200 transition duration-300">
-                            <i class="fas fa-tachometer-alt text-purple-600 text-lg"></i>
+                        class="flex items-center p-4 transition duration-300 bg-white border border-gray-200 shadow-sm rounded-xl hover:shadow-md hover:border-purple-300 group">
+                        <div class="flex items-center justify-center w-12 h-12 transition duration-300 bg-purple-100 rounded-lg group-hover:bg-purple-200">
+                            <i class="text-lg text-purple-600 fas fa-tachometer-alt"></i>
                         </div>
                         <div class="ml-4 text-left">
                             <h3 class="font-semibold text-gray-900">Dashboard</h3>
-                            <p class="text-sm text-gray-500 mt-1">Back to main dashboard</p>
+                            <p class="mt-1 text-sm text-gray-500">Back to main dashboard</p>
                         </div>
-                        <i class="fas fa-chevron-right text-gray-400 ml-auto group-hover:text-purple-600 transition duration-300"></i>
+                        <i class="ml-auto text-gray-400 transition duration-300 fas fa-chevron-right group-hover:text-purple-600"></i>
                     </a>
                 </div>
 
                 <!-- Security Tips -->
-                <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mt-6">
-                    <h4 class="font-semibold text-yellow-800 flex items-center">
-                        <i class="fas fa-shield-alt mr-2"></i>
+                <div class="p-4 mt-6 border border-yellow-200 bg-yellow-50 rounded-xl">
+                    <h4 class="flex items-center font-semibold text-yellow-800">
+                        <i class="mr-2 fas fa-shield-alt"></i>
                         Security Tips
                     </h4>
-                    <ul class="text-sm text-yellow-700 mt-2 space-y-1">
+                    <ul class="mt-2 space-y-1 text-sm text-yellow-700">
                         <li class="flex items-start">
                             <i class="fas fa-check text-yellow-500 mr-2 mt-0.5 text-xs"></i>
                             Use a strong, unique password

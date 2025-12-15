@@ -115,12 +115,24 @@ function trackProductView($pdo, $product_id)
 // }
 
 /**
- * Generate WhatsApp share link
+ * Ge
+ * nerate WhatsApp share link
  */
+// In config.php
+define('WHATSAPP_NUMBER', '250780088390');
 function getWhatsAppLink($product)
 {
+    // Get WhatsApp number from config
+    $whatsapp_number = defined('WHATSAPP_NUMBER') ? WHATSAPP_NUMBER : '250780088390';
+
+    // Create the message
     $message = "Hi, I'm interested in: " . $product['name'] . " - " . SITE_URL . "/public/product-detail.php?slug=" . $product['slug'];
-    return "https://wa.me/?text=" . urlencode($message);
+
+    // Encode the message
+    $encoded_message = urlencode($message);
+
+    // WhatsApp URL with phone number
+    return "https://wa.me/" . $whatsapp_number . "?text=" . $encoded_message;
 }
 
 /**
