@@ -102,19 +102,19 @@ $categories = getCategories($pdo);
                     <h4 class="mb-3 font-medium text-gray-700">Price Range</h4>
                     <div class="space-y-2">
                         <a href="search.php?q=<?= urlencode($search_query) ?>&price=0-50" class="block px-3 py-2 text-gray-700 transition duration-300 rounded hover:bg-gray-50">
-                            Under $50
+                            Under RWF 50
                         </a>
                         <a href="search.php?q=<?= urlencode($search_query) ?>&price=50-100" class="block px-3 py-2 text-gray-700 transition duration-300 rounded hover:bg-gray-50">
-                            $50 - $100
+                            RWF 50 - RWF 100
                         </a>
                         <a href="search.php?q=<?= urlencode($search_query) ?>&price=100-500" class="block px-3 py-2 text-gray-700 transition duration-300 rounded hover:bg-gray-50">
-                            $100 - $500
+                            RWF 100 - RWF 500
                         </a>
                         <a href="search.php?q=<?= urlencode($search_query) ?>&price=500-1000" class="block px-3 py-2 text-gray-700 transition duration-300 rounded hover:bg-gray-50">
-                            $500 - $1000
+                            RWF 500 - RWF 1000
                         </a>
                         <a href="search.php?q=<?= urlencode($search_query) ?>&price=1000" class="block px-3 py-2 text-gray-700 transition duration-300 rounded hover:bg-gray-50">
-                            Over $1000
+                            Over RWF 1000
                         </a>
                     </div>
                 </div>

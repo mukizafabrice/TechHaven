@@ -324,9 +324,9 @@ function formatPrice($price)
     // Ensure price is a valid number
     $price = floatval($price);
     if ($price <= 0) {
-        return '$0.00';
+        return 'FR0.00';
     }
-    return '$' . number_format($price, 2);
+    return 'FR' . number_format($price, 2);
 }
 function calculateDiscountPercentage($original_price, $discount_price)
 {

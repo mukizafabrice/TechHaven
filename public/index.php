@@ -14,7 +14,11 @@ if (!function_exists('calculateDiscountPercentage')) {
 if (!function_exists('formatPrice')) {
     function formatPrice($price)
     {
-        return '$' . number_format($price, 2);
+        $price = floatval($price);
+        if ($price <= 0) {
+            return 'RWF 0.00';
+        }
+        return 'RWF ' . number_format($price, 2);
     }
 }
 
@@ -87,6 +91,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -97,6 +102,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
             from {
                 opacity: 0;
             }
+
             to {
                 opacity: 1;
             }
@@ -107,6 +113,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
                 opacity: 0;
                 transform: translateX(-50px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -114,9 +121,12 @@ elseif (empty($featured_products) && !empty($all_products)) {
         }
 
         @keyframes float {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translateY(0px);
             }
+
             50% {
                 transform: translateY(-10px);
             }
@@ -127,54 +137,70 @@ elseif (empty($featured_products) && !empty($all_products)) {
                 background-image: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
                 opacity: 1;
             }
+
             25% {
                 opacity: 1;
             }
+
             30% {
                 opacity: 0;
             }
+
             31% {
                 background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
                 opacity: 0;
             }
+
             32% {
                 opacity: 1;
             }
+
             57% {
                 opacity: 1;
             }
+
             60% {
                 opacity: 0;
             }
+
             61% {
                 background-image: url('https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
                 opacity: 0;
             }
+
             62% {
                 opacity: 1;
             }
+
             85% {
                 opacity: 1;
             }
+
             88% {
                 opacity: 0;
             }
+
             89% {
                 background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
                 opacity: 0;
             }
+
             90% {
                 opacity: 1;
             }
+
             100% {
                 opacity: 1;
             }
         }
 
         @keyframes pulseGlow {
-            0%, 100% {
+
+            0%,
+            100% {
                 box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
             }
+
             50% {
                 box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
             }
@@ -435,11 +461,11 @@ elseif (empty($featured_products) && !empty($all_products)) {
             .social-bar:hover {
                 transform: none;
             }
-            
+
             .hero-title {
                 font-size: 2.5rem !important;
             }
-            
+
             .hero-subtitle {
                 font-size: 1rem !important;
             }
@@ -524,7 +550,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
                 </a>
             </div>
         </div>
-        
+
         <!-- Scroll Indicator -->
         <div class="absolute transform -translate-x-1/2 bottom-8 left-1/2 animate-bounce">
             <a href="#categories" class="transition-colors duration-300 text-white/70 hover:text-white">
@@ -599,7 +625,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
                         $category_name = $product['category_name'] ?? 'Uncategorized';
                         $short_description = $product['short_description'] ?? $product['description'] ?? 'No description available';
                         $is_featured = $product['is_featured'] ?? false;
-
+                        
                         $discount_percentage = calculateDiscountPercentage($product_price, $discount_price);
 
                         // Improved image path checking with better fallback
@@ -612,7 +638,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
                                 'assets/uploads/products/' . $product['featured_image'],
                                 '../uploads/products/' . $product['featured_image']
                             ];
-                            
+
                             foreach ($image_paths as $path) {
                                 if (file_exists($path)) {
                                     $image_src = $path;
@@ -620,7 +646,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
                                 }
                             }
                         }
-                        
+
                         // Fallback to professional placeholder
                         if (empty($image_src)) {
                             $image_src = 'https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80';
@@ -741,7 +767,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
                         </div>
                         <h3 class="mb-4 text-2xl font-black text-gray-900">Free Shipping</h3>
                         <p class="text-lg leading-relaxed text-gray-600">
-                            Free express shipping on all orders over $50. Fast delivery to your doorstep.
+                            Free express shipping on all orders over RWF 50. Fast delivery to your doorstep.
                         </p>
                     </div>
                 </div>
@@ -904,7 +930,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
                 'https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
                 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
             ];
-            
+
             heroImages.forEach(src => {
                 const img = new Image();
                 img.src = src;
@@ -912,4 +938,5 @@ elseif (empty($featured_products) && !empty($all_products)) {
         });
     </script>
 </body>
+
 </html>

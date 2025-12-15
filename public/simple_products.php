@@ -117,7 +117,7 @@ $page_title = "Products - TechHaven";
                             <h3 class="mt-2 text-lg font-bold"><?= htmlspecialchars($product['name']) ?></h3>
                             <p class="mt-2 text-sm text-gray-600 line-clamp-2"><?= htmlspecialchars($product['short_description'] ?? 'No description') ?></p>
                             <div class="flex items-center justify-between mt-4">
-                                <span class="text-xl font-bold text-blue-600">$<?= number_format($product['price'], 2) ?></span>
+                                <span class="text-xl font-bold text-blue-600">RWF <?= number_format($product['price'], 2) ?></span>
                                 <a href="product-detail.php?slug=<?= $product['slug'] ?>"
                                     class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
                                     View Details
