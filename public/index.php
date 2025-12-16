@@ -138,6 +138,10 @@ elseif (empty($featured_products) && !empty($all_products)) {
                 opacity: 1;
             }
 
+            /* 25% {
+                opacity: 1;
+            } */
+
             30% {
                 opacity: 1;
             }
@@ -146,6 +150,14 @@ elseif (empty($featured_products) && !empty($all_products)) {
                 background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
                 opacity: 1;
             }
+
+            /* 32% {
+                opacity: 1;
+            }
+
+            57% {
+                opacity: 1;
+            } */
 
             60% {
                 opacity: 1;
@@ -159,6 +171,14 @@ elseif (empty($featured_products) && !empty($all_products)) {
             62% {
                 opacity: 1;
             }
+
+            /* 85% {
+                opacity: 1;
+            }
+
+            88% {
+                opacity: 1;
+            } */
 
             89% {
                 background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
@@ -503,7 +523,7 @@ elseif (empty($featured_products) && !empty($all_products)) {
     <section class="relative flex items-center justify-center min-h-[85vh] overflow-hidden">
         <!-- Hero Background with fixed animation -->
         <div class="absolute inset-0 z-0 hero-bg"></div>
-        <div class="absolute inset-0 z-10 bg-black/30"></div>
+        <div class="absolute inset-0 z-10 bg-black/40"></div>
 
         <!-- Content -->
         <div class="relative z-20 max-w-6xl px-4 mx-auto text-center text-white">

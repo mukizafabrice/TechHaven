@@ -138,11 +138,11 @@ if ($_POST) {
         </div>
 
         <!-- Temporary debug link - remove in production -->
-        <div class="mt-4 text-center">
+        <!-- <div class="mt-4 text-center">
             <a href="reset-password.php" class="text-sm text-red-600 hover:text-red-500">
                 Reset Password (Debug)
             </a>
-        </div>
+        </div> -->
     </div>
 </body>
 

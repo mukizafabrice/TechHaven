@@ -353,3 +353,80 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
             <!-- Content Area -->
             <div class="p-6">
+
+
+
+
+
+                <!-- Add this script at the end of your file, before closing body tag -->
+                <script>
+                    // Mobile menu toggle
+                    document.getElementById('mobileMenuButton').addEventListener('click', function() {
+                        const sidebar = document.getElementById('adminSidebar');
+                        sidebar.classList.toggle('mobile-open');
+
+                        // Change icon based on state
+                        const icon = this.querySelector('i');
+                        if (sidebar.classList.contains('mobile-open')) {
+                            icon.classList.remove('fa-bars');
+                            icon.classList.add('fa-times');
+                        } else {
+                            icon.classList.remove('fa-times');
+                            icon.classList.add('fa-bars');
+                        }
+                    });
+
+                    // User dropdown toggle
+                    const userDropdown = document.getElementById('userDropdown');
+                    if (userDropdown) {
+                        const dropdownButton = userDropdown.querySelector('button');
+                        const dropdownMenu = userDropdown.querySelector('.dropdown-menu');
+
+                        dropdownButton.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            dropdownMenu.classList.toggle('show');
+                        });
+
+                        // Close dropdown when clicking outside
+                        document.addEventListener('click', function(e) {
+                            if (!userDropdown.contains(e.target)) {
+                                dropdownMenu.classList.remove('show');
+                            }
+                        });
+                    }
+
+                    // Close sidebar when clicking on a link (mobile only)
+                    const sidebarLinks = document.querySelectorAll('.sidebar-link');
+                    sidebarLinks.forEach(link => {
+                        link.addEventListener('click', function() {
+                            if (window.innerWidth <= 768) {
+                                const sidebar = document.getElementById('adminSidebar');
+                                const menuButton = document.getElementById('mobileMenuButton');
+                                const icon = menuButton.querySelector('i');
+
+                                sidebar.classList.remove('mobile-open');
+                                icon.classList.remove('fa-times');
+                                icon.classList.add('fa-bars');
+                            }
+                        });
+                    });
+
+                    // Close sidebar when pressing Escape key
+                    document.addEventListener('keydown', function(e) {
+                        if (e.key === 'Escape') {
+                            const sidebar = document.getElementById('adminSidebar');
+                            const menuButton = document.getElementById('mobileMenuButton');
+                            const icon = menuButton.querySelector('i');
+
+                            sidebar.classList.remove('mobile-open');
+                            icon.classList.remove('fa-times');
+                            icon.classList.add('fa-bars');
+
+                            // Also close dropdown menu
+                            const dropdownMenu = document.querySelector('.dropdown-menu');
+                            if (dropdownMenu) {
+                                dropdownMenu.classList.remove('show');
+                            }
+                        }
+                    });
+                </script>
